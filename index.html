@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10110e">
+  <meta name="description" content="Sohom Chandra — exploring cybersecurity, reverse engineering, low-level systems, and the layers beneath software.">
+  <title>Sohom Chandra — Security & Systems</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10110e;--panel:#171813;--ink:#efeee6;--muted:#a2a398;--line:#34362e;--accent:#d7ff65;--orange:#ff784f;--max:1240px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:linear-gradient(to right,transparent calc(100% - 1px),#606154 1px),linear-gradient(to bottom,transparent calc(100% - 1px),#606154 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 90%);z-index:-1}
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+    .wrap{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+    .topbar{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.02em;text-transform:none;font-size:14px}
+    .mark{width:25px;height:25px;border:1px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-size:13px}
+    .nav{display:flex;gap:30px;color:var(--muted)}
+    .nav a:hover,.text-link:hover{color:var(--accent)}
+    .availability{display:flex;align-items:center;gap:8px;color:var(--muted)}
+    .dot{width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px #d7ff6566}
+    .hero{min-height:690px;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:40px;align-items:center;padding-block:95px 100px;position:relative}
+    .eyebrow,.section-kicker,.meta{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+    .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:29px}
+    .eyebrow:before{content:"";height:1px;width:32px;background:var(--orange)}
+    h1{font-size:clamp(58px,8.7vw,120px);line-height:.91;letter-spacing:-.085em;font-weight:560;max-width:900px;margin:0}
+    h1 .outline{color:transparent;-webkit-text-stroke:1px #efeee6a6}
+    h1 .accent{color:var(--accent)}
+    .hero-copy{max-width:560px;color:#b8b9ae;font-size:17px;line-height:1.75;margin:35px 0 29px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .button{display:inline-flex;align-items:center;gap:15px;padding:13px 17px;border:1px solid var(--line);font-size:12px;font-weight:650;transition:background .2s,color .2s,border-color .2s}
+    .button.primary{background:var(--accent);color:#171910;border-color:var(--accent)}
+    .button:hover{border-color:var(--accent)}
+    .button.primary:hover{background:#e5ff9c}
+    .button .arrow{font-size:16px;line-height:1}
+    .hero-side{align-self:end;padding-bottom:15px;border-left:1px solid var(--line);padding-left:22px}
+    .side-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:13px}
+    .side-item{font-size:13px;margin:9px 0;color:#d1d1c8}
+    .side-item span{color:var(--muted);margin-right:8px}
+    .hero-index{position:absolute;bottom:32px;left:0;right:0;border-top:1px solid var(--line);padding-top:15px;display:flex;justify-content:space-between;color:var(--muted);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+    .section{border-top:1px solid var(--line);padding:100px 0}
+    .section-head{display:grid;grid-template-columns:1fr 2fr;gap:35px;margin-bottom:48px}
+    .section-kicker{padding-top:10px}
+    h2{font-size:clamp(36px,5.3vw,65px);line-height:1;letter-spacing:-.065em;font-weight:520;margin:0;max-width:760px}
+    .section-intro{color:var(--muted);max-width:570px;margin:18px 0 0;font-size:15px}
+    .work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+    .work-card{min-height:260px;padding:27px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;transition:background .25s}
+    .work-card:hover{background:#1a1c15}
+    .card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:42px}
+    .card-num{font-size:11px;color:var(--muted);letter-spacing:.1em}
+    .card-icon{color:var(--accent);font-size:19px}
+    h3{font-size:23px;letter-spacing:-.04em;font-weight:550;margin:0 0 10px}
+    .work-card p{color:var(--muted);font-size:13px;max-width:440px;margin:0 0 24px}
+    .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
+    .tag{border:1px solid var(--line);padding:5px 8px;color:#c7c8bc;font-size:10px;letter-spacing:.04em}
+    .card-link{display:inline-flex;gap:8px;align-items:center;color:var(--accent);font-size:12px;margin-top:20px;width:max-content}
+    .focus-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+    .focus-note{font-size:clamp(25px,3vw,38px);letter-spacing:-.05em;line-height:1.25;max-width:560px;margin:0}
+    .focus-note em{font-style:normal;color:var(--accent)}
+    .focus-list{border-top:1px solid var(--line)}
+    .focus-row{display:grid;grid-template-columns:42px 1fr auto;gap:12px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+    .focus-row .n{font-size:10px;color:var(--orange)}
+    .focus-row .label{font-size:14px}
+    .focus-row .status{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+    .about-copy{font-size:17px;line-height:1.8;color:#c2c3b8;max-width:590px;margin:0}
+    .about-copy strong{color:var(--ink);font-weight:550}
+    .principles{border-top:1px solid var(--line)}
+    .principle{padding:16px 0;border-bottom:1px solid var(--line);display:flex;gap:18px;font-size:13px}
+    .principle span{color:var(--accent);font-size:10px;padding-top:4px}
+    .contact{padding:90px 0 70px;border-top:1px solid var(--line)}
+    .contact-inner{display:flex;justify-content:space-between;align-items:end;gap:40px}
+    .contact h2{max-width:650px}
+    .contact .button{white-space:nowrap}
+    footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+    .reveal{animation:rise .7s both}
+    .delay{animation-delay:.12s}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+    @media(max-width:760px){.wrap{width:min(100% - 32px,var(--max))}.topbar{height:68px}.nav{gap:14px}.nav a{font-size:10px}.availability{display:none}.hero{grid-template-columns:1fr;min-height:unset;padding:90px 0 100px;gap:50px}h1{font-size:clamp(54px,13vw,88px)}.hero-copy{font-size:15px}.hero-side{align-self:auto;max-width:360px}.hero-index{bottom:25px}.section{padding:70px 0}.section-head{grid-template-columns:1fr;gap:20px;margin-bottom:32px}.work-grid{grid-template-columns:1fr}.work-card{min-height:230px}.focus-layout,.about-grid{grid-template-columns:1fr;gap:35px}.contact-inner{align-items:start;flex-direction:column}.contact{padding:70px 0 55px}}
+    @media(max-width:420px){.nav{gap:10px}.nav a{font-size:9px}.brand{font-size:12px}.mark{width:22px;height:22px}.hero-index{font-size:8px}.focus-row{grid-template-columns:25px 1fr}.focus-row .status{grid-column:2}footer{flex-direction:column;gap:8px}}
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#top" aria-label="Sohom Chandra home"><span class="mark">S/</span><span>SOHOM CHANDRA</span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#work">Work</a><a href="#focus">Focus</a><a href="#about">About</a><a href="#contact">Contact ↗</a>
+    </nav>
+    <div class="availability"><span class="dot"></span> Learning in public</div>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow reveal">Security · Systems · Reverse engineering</div>
+        <h1 class="reveal delay">Looking<br>beneath the<br><span class="outline">surface</span><span class="accent">.</span></h1>
+        <p class="hero-copy reveal delay">I'm Sohom — exploring how software behaves at the lowest levels, from machine instructions and memory to operating systems and security boundaries.</p>
+        <div class="actions reveal delay">
+          <a class="button primary" href="#work">Explore the work <span class="arrow">↘</span></a>
+          <a class="button" href="https://github.com/PaweesRaag" target="_blank" rel="noreferrer">GitHub profile <span class="arrow">↗</span></a>
+        </div>
+      </div>
+      <aside class="hero-side reveal delay" aria-label="Areas of interest">
+        <div class="side-label">Current coordinates</div>
+        <div class="side-item"><span>01 /</span> x86-64 assembly</div>
+        <div class="side-item"><span>02 /</span> Linux internals</div>
+        <div class="side-item"><span>03 /</span> Reverse engineering</div>
+        <div class="side-item"><span>04 /</span> Binary exploitation</div>
+      </aside>
+      <div class="hero-index"><span>Independent learning log / 001</span><span>Curiosity over spectacle</span><span>Scroll to inspect ↓</span></div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-kicker">01 — Workbench</div>
+          <div><h2>Work in progress.<br>Thinking in public.</h2><p class="section-intro">A growing collection of systems experiments, notes, and technical projects. This space will link to the source and explain what each piece taught me.</p></div>
+        </div>
+        <div class="work-grid">
+          <article class="work-card">
+            <div class="card-top"><span class="card-num">TRACK / 001</span><span class="card-icon">↳</span></div>
+            <h3>Assembly & machine state</h3>
+            <p>Learning to reason from registers, instructions, stack state, and calling conventions instead of treating compiled programs as black boxes.</p>
+            <div class="tags"><span class="tag">x86-64</span><span class="tag">GDB</span><span class="tag">Linux</span></div>
+            <a class="card-link" href="https://github.com/PaweesRaag" target="_blank" rel="noreferrer">Browse repositories ↗</a>
+          </article>
+          <article class="work-card">
+            <div class="card-top"><span class="card-num">TRACK / 002</span><span class="card-icon">⌘</span></div>
+            <h3>Reverse engineering</h3>
+            <p>Following program behavior through disassembly, debugging, memory layout, and the boundary between source-level ideas and machine-level reality.</p>
+            <div class="tags"><span class="tag">Disassembly</span><span class="tag">Debugging</span><span class="tag">Binary analysis</span></div>
+            <a class="card-link" href="https://github.com/PaweesRaag" target="_blank" rel="noreferrer">Browse repositories ↗</a>
+          </article>
+          <article class="work-card">
+            <div class="card-top"><span class="card-num">TRACK / 003</span><span class="card-icon">⌁</span></div>
+            <h3>Memory & process internals</h3>
+            <p>Building a practical mental model of virtual memory, processes, system calls, and how operating systems mediate execution.</p>
+            <div class="tags"><span class="tag">OS internals</span><span class="tag">Memory</span><span class="tag">Syscalls</span></div>
+            <a class="card-link" href="https://github.com/PaweesRaag" target="_blank" rel="noreferrer">Browse repositories ↗</a>
+          </article>
+          <article class="work-card">
+            <div class="card-top"><span class="card-num">TRACK / 004</span><span class="card-icon">⊹</span></div>
+            <h3>Security labs & field notes</h3>
+            <p>Documenting experiments, debugging sessions, and lessons from hands-on security learning — with the reasoning, not just the result.</p>
+            <div class="tags"><span class="tag">Exploit development</span><span class="tag">Notes</span><span class="tag">Practice</span></div>
+            <a class="card-link" href="https://github.com/PaweesRaag" target="_blank" rel="noreferrer">Browse repositories ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="focus">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-kicker">02 — Active inquiry</div>
+          <div><h2>Understand the layer below.</h2><p class="section-intro">The goal is not to memorize commands. It's to understand why the system behaves the way it does.</p></div>
+        </div>
+        <div class="focus-layout">
+          <p class="focus-note">Every abstraction has a boundary. I'm learning to follow the evidence <em>past it</em> — one instruction, process, and memory address at a time.</p>
+          <div class="focus-list">
+            <div class="focus-row"><span class="n">A1</span><span class="label">Registers, flags & calling conventions</span><span class="status">Studying</span></div>
+            <div class="focus-row"><span class="n">A2</span><span class="label">Stack frames & memory corruption</span><span class="status">Practising</span></div>
+            <div class="focus-row"><span class="n">A3</span><span class="label">Linux process and memory model</span><span class="status">Studying</span></div>
+            <div class="focus-row"><span class="n">A4</span><span class="label">Debugging and binary analysis</span><span class="status">Practising</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-kicker">03 — About this space</div>
+          <div><h2>Less mystique.<br>More mechanism.</h2></div>
+        </div>
+        <div class="about-grid">
+          <p class="about-copy">This portfolio is a record of learning how software works <strong>underneath its abstractions</strong>. I’m especially interested in the intersection of low-level programming, operating systems, reverse engineering, and security. The emphasis here is on careful experiments, clear explanations, and showing the work honestly.</p>
+          <div class="principles">
+            <div class="principle"><span>↗</span><div>Show evidence, source code, and reasoning where possible.</div></div>
+            <div class="principle"><span>↗</span><div>Separate what I know from what I am actively learning.</div></div>
+            <div class="principle"><span>↗</span><div>Prefer precise technical notes over inflated claims.</div></div>
+            <div class="principle"><span>↗</span><div>Keep experiments ethical, scoped, and reproducible.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact-inner">
+        <div><div class="eyebrow">04 — Open channel</div><h2>Good questions make good starting points.</h2><p class="section-intro">Want to discuss systems, security, or something I’ve built? Find me on GitHub.</p></div>
+        <a class="button primary" href="https://github.com/PaweesRaag" target="_blank" rel="noreferrer">Connect on GitHub <span class="arrow">↗</span></a>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap"><span>© <span id="year">2026</span> Sohom Chandra</span><span>Built with curiosity · No tracking · No noise</span><a href="#top">Back to top ↑</a></footer>
+  <script>document.getElementById("year").textContent = String(new Date().getFullYear());</script>
+</body>
+</html>
