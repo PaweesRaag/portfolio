@@ -1,4 +1,4 @@
-# Sohom Chandra — Portfolio
+# PaweesRaag — Portfolio
 
 A static portfolio for my learning and work around cybersecurity, reverse engineering, and low-level systems.
 
