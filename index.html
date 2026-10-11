@@ -73,10 +73,16 @@ td{padding:14px;border-bottom:1px solid rgba(0,191,255,.2);color:var(--mute)}td:
 @media(max-width:800px){.contact{grid-template-columns:1fr}.pwrap{max-width:260px}}
 footer{padding:40px var(--pad) calc(40px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(0,191,255,.25);display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+/* Digital corridor backdrop for the content sections (kept behind readable content). */
+#scene{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.7;background-color:#030914;
+background-image:linear-gradient(rgba(0,8,20,.32),rgba(0,8,20,.56)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 810' preserveAspectRatio='xMidYMid slice'%3E%3Crect width='1440' height='810' fill='%23030914'/%3E%3Cg fill='none' stroke='%234b7898' stroke-width='1' opacity='.55'%3E%3Cpath d='M0 0H1440 M0 40H1440 M0 90H1440 M0 150H1440 M0 220H1440 M0 300H1440 M0 390H1440 M0 450H1440 M0 510H1440 M0 600H1440 M0 710H1440 M0 810H1440'/%3E%3Cpath d='M0 0L720 450 1440 0 M0 40L720 450 1440 40 M0 90L720 450 1440 90 M0 150L720 450 1440 150 M0 220L720 450 1440 220 M0 300L720 450 1440 300 M0 390L720 450 1440 390 M0 510L720 450 1440 510 M0 600L720 450 1440 600 M0 710L720 450 1440 710 M0 810L720 450 1440 810'/%3E%3Cpath d='M0 0V810 M60 0V810 M130 0V810 M210 0V810 M300 0V810 M400 0V810 M500 0V810 M600 0V810 M680 0V810 M760 0V810 M840 0V810 M940 0V810 M1050 0V810 M1160 0V810 M1280 0V810 M1380 0V810 M1440 0V810'/%3E%3C/g%3E%3Cg fill='none' stroke='%23b5e8ff' stroke-width='2' opacity='.8'%3E%3Cpath d='M0 490L720 450 1440 490 M0 34L720 450 1440 34 M320 0L720 450 1120 0 M0 710H1440 M315 0V810 M1125 0V810'/%3E%3C/g%3E%3C/svg%3E");
+background-position:center;background-size:cover;background-repeat:no-repeat}
+section{background:transparent}
 </style>
 </head>
 <body>
-<div id="grid" aria-hidden="true"></div>
+<div id="scene" aria-hidden="true"></div><div id="grid" aria-hidden="true"></div>
 <nav id="nav" aria-label="Primary">
 <a class="mark" href="#hero" aria-label="Sohom Chandra — top">SC</a>
 <button id="burger" aria-expanded="false" aria-controls="menu">MENU</button>
