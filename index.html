@@ -3,72 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#030914">
-<meta name="description" content="Sohom Chandra — personal cybersecurity portfolio. Under the surface.">
-<title>Sohom Chandra — Under the Surface</title>
+<meta name="theme-color" content="#02050b">
+<meta name="description" content="A cinematic black hole visual study.">
+<title>Event Horizon</title>
 <style>
-:root{color-scheme:dark;--void:#030914;--cyan:#00c8f5;--ice:#eaf8ff}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--void);color:var(--ice);font-family:Arial,Helvetica,sans-serif}
-body{overflow:hidden}
-#scene{position:relative;isolation:isolate;height:100svh;min-height:600px;width:100%;overflow:hidden;background:#020712}
-#hole{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
-#vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,7,17,.25),rgba(2,7,17,.02) 56%,rgba(2,7,17,.12)),linear-gradient(0deg,rgba(2,7,17,.52),transparent 35%);z-index:0}
-nav{position:absolute;z-index:2;top:31px;left:5.5%;right:5.5%;display:flex;align-items:center;gap:clamp(18px,2.4vw,38px)}
-.brand{font-weight:900;font-size:27px;letter-spacing:-1.5px;color:#f2f8fc;margin-right:5px}
-nav a{font-size:12px;letter-spacing:.055em;color:#b8c8d5;text-transform:uppercase;text-decoration:none;transition:color .2s}
-nav a:hover,nav a:focus-visible{color:var(--cyan)}
-.hero-copy{position:absolute;z-index:2;left:5.8%;top:49%;transform:translateY(-43%);width:min(47vw,720px);text-shadow:0 2px 24px rgba(2,7,17,.8)}
-.eyebrow{margin:0 0 19px;color:var(--cyan);font:500 clamp(10px,.88vw,13px)/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em}
-h1{margin:0 0 13px;font-size:clamp(26px,2.7vw,43px);line-height:1.04;letter-spacing:.005em;font-weight:800}
-.tagline{margin:0;font-size:clamp(46px,6.05vw,94px);font-weight:900;line-height:.91;letter-spacing:-.045em;text-transform:uppercase}
-.cursor{display:inline-block;width:.19em;height:.49em;background:var(--cyan);margin-left:.09em;vertical-align:-.015em;box-shadow:0 0 16px rgba(0,200,245,.4);animation:blink 1.05s steps(1,end) infinite}
-.rule{width:112px;height:2px;background:var(--cyan);opacity:.8;margin-top:27px;box-shadow:0 0 12px rgba(0,200,245,.4)}
-.scroll{position:absolute;left:5.8%;bottom:5%;z-index:2;color:var(--cyan);font:11px ui-monospace,monospace;letter-spacing:.12em}
-.scroll-line{height:54px;width:1px;background:linear-gradient(var(--cyan),rgba(0,200,245,.12));margin:13px 0 0 17px;position:relative}
-.scroll-line:after{content:"";position:absolute;left:-4px;bottom:2px;width:8px;height:8px;border-right:1px solid var(--cyan);border-bottom:1px solid var(--cyan);transform:rotate(45deg)}
-.status{position:absolute;right:5.5%;bottom:5.3%;font:10px ui-monospace,monospace;letter-spacing:.16em;color:rgba(111,190,219,.58);z-index:2}
-@keyframes blink{50%{opacity:0}}
-@media(max-width:700px){#scene{min-height:600px}nav{left:6%;right:6%;top:23px;gap:clamp(10px,3vw,18px)}.brand{font-size:22px;margin-right:0}nav a{font-size:9px;letter-spacing:0}.hero-copy{left:6%;top:35%;transform:none;width:88vw}h1{font-size:clamp(24px,6vw,34px)}.tagline{font-size:clamp(45px,10.7vw,72px)}.scroll{left:6%;bottom:4%}.scroll-line{height:38px}.status{right:6%;bottom:4%;font-size:8px}}
-@media(max-width:390px){nav{gap:9px}.brand{font-size:20px}nav a{font-size:8px}.hero-copy{top:34%}}
-@media(prefers-reduced-motion:reduce){.cursor{animation:none;opacity:1}nav a{transition:none}}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#02050b}
+main{position:relative;width:100%;height:100%;height:100svh;overflow:hidden;background:#02050b}
+video{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;object-position:center;display:block;filter:brightness(.78) saturate(.88);transform:scale(1.025);animation:cinematic-drift 32s ease-in-out infinite alternate}
+main:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 65% 48%,transparent 25%,rgba(0,4,12,.16) 72%,rgba(0,3,9,.42) 100%),linear-gradient(90deg,rgba(0,4,12,.22),transparent 45%,rgba(0,4,12,.08))}
+@keyframes cinematic-drift{from{transform:scale(1.025) translate3d(0,0,0)}to{transform:scale(1.09) translate3d(-.6%,.25%,0)}}
+@media(prefers-reduced-motion:reduce){video{animation:none;transform:scale(1.025)}}
 </style>
 </head>
 <body>
-<main id="scene" aria-label="Sohom Chandra personal cybersecurity portfolio">
- <canvas id="hole" aria-hidden="true"></canvas><div id="vignette" aria-hidden="true"></div>
- <nav aria-label="Portfolio navigation"><span class="brand">SC</span><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav>
- <section class="hero-copy" aria-labelledby="hero-title"><p class="eyebrow">// PERSONAL CYBERSECURITY PORTFOLIO</p><h1 id="hero-title">SOHOM CHANDRA</h1><p class="tagline">UNDER THE<br>SURFACE<span class="cursor" aria-hidden="true"></span></p><div class="rule" aria-hidden="true"></div></section>
- <div class="scroll">SCROLL<div class="scroll-line" aria-hidden="true"></div></div><div class="status">EVENT HORIZON &nbsp; / &nbsp; 001</div>
+<main aria-label="Full-screen cinematic black hole video">
+<video autoplay muted loop playsinline preload="auto" aria-label="Slow rotating black hole and accretion disk">
+<source src="https://svs.gsfc.nasa.gov/vis/a010000/a013300/a013326/BH_AccretionDisk_Sim_360_wide_16x9_1080.webm" type="video/webm">
+<source src="https://svs.gsfc.nasa.gov/vis/a010000/a013300/a013326/BH_AccretionDisk_Sim_360_wide_16x9_1080.mp4" type="video/mp4">
+</video>
 </main>
 <script>
-(()=>{
- const canvas=document.getElementById('hole'),ctx=canvas.getContext('2d',{alpha:false});if(!ctx)return;
- const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;let w=0,h=0,dpr=1,raf=0,last=0,time=0,stars=[];
- const rnd=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v)};
- function resize(){dpr=Math.min(devicePixelRatio||1,1.5);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:450},(_,i)=>({x:rnd(i+8)*w,y:rnd(i+99)*h,r:.3+rnd(i+34)*1.1,a:.12+rnd(i+65)*.55}))}
- function draw(now){
-  const dt=last?Math.min((now-last)/1000,.04):0;last=now;if(!reduced)time+=dt;ctx.fillStyle='#020712';ctx.fillRect(0,0,w,h);
-  const cx=w*.755,cy=h*.535,R=Math.min(w*.34,h*.57),rot=-.16;
-  const bg=ctx.createRadialGradient(cx,cy,2,cx,cy,R*1.8);bg.addColorStop(0,'rgba(0,76,128,.22)');bg.addColorStop(.5,'rgba(0,35,66,.13)');bg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
-  for(const s of stars){ctx.fillStyle='rgba(115,204,255,'+(s.a*(.8+.2*Math.sin(time+s.x*.02))+0.03)+')';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill()}
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(1,.34);let haze=ctx.createRadialGradient(0,0,R*.25,0,0,R*1.45);haze.addColorStop(0,'rgba(0,0,0,0)');haze.addColorStop(.36,'rgba(0,95,160,.04)');haze.addColorStop(.62,'rgba(0,165,235,.16)');haze.addColorStop(.78,'rgba(0,105,190,.09)');haze.addColorStop(1,'rgba(0,20,45,0)');ctx.fillStyle=haze;ctx.beginPath();ctx.arc(0,0,R*1.45,0,Math.PI*2);ctx.fill();ctx.restore();
-  // Far-side lensing arc.
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);const back=ctx.createLinearGradient(-R,-R*.15,R,R*.15);back.addColorStop(0,'rgba(0,125,205,0)');back.addColorStop(.25,'rgba(0,160,230,.24)');back.addColorStop(.48,'rgba(155,230,255,.72)');back.addColorStop(.57,'rgba(0,165,245,.5)');back.addColorStop(1,'rgba(0,95,175,0)');ctx.strokeStyle=back;ctx.lineWidth=R*.045;ctx.shadowBlur=24;ctx.shadowColor='#008dce';ctx.beginPath();ctx.ellipse(0,0,R*1.08,R*.40,0,Math.PI*1.04,Math.PI*1.98);ctx.stroke();ctx.restore();
-  // Uneven layers of the luminous disk.
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);
-  for(let i=0;i<15;i++){const f=.69+i*.027,phase=time*(i%2?-.09:.07);ctx.save();ctx.translate(Math.sin(phase)*R*.025,Math.cos(phase)*R*.012);ctx.scale(1,.34);const grad=ctx.createLinearGradient(-R*f,-R*.12,R*f,R*.12);grad.addColorStop(0,'rgba(0,65,130,0)');grad.addColorStop(.17,'rgba(0,126,205,.10)');grad.addColorStop(.34,'rgba(0,174,245,.40)');grad.addColorStop(.46,'rgba(104,218,255,.75)');grad.addColorStop(.51,'rgba(242,252,255,.98)');grad.addColorStop(.56,'rgba(0,191,255,.8)');grad.addColorStop(.72,'rgba(0,118,210,.28)');grad.addColorStop(1,'rgba(0,65,140,0)');ctx.strokeStyle=grad;ctx.lineWidth=i%4===0?R*.016:R*.006;ctx.globalAlpha=.52+(i%5)*.08;ctx.shadowBlur=i%4===0?18:7;ctx.shadowColor='#1bbcff';ctx.beginPath();ctx.ellipse(0,0,R*f,R*.55*f,0,.04+Math.sin(time*.08+i)*.035,Math.PI*1.96);ctx.stroke();ctx.restore()}
-  ctx.globalAlpha=1;ctx.save();ctx.scale(1,.34);
-  for(let i=0;i<230;i++){const a=rnd(i+12)*Math.PI*2+time*(.07+rnd(i+41)*.08),rr=R*(.72+rnd(i+73)*.53),x=Math.cos(a)*rr,y=Math.sin(a)*rr,front=Math.sin(a),size=.4+rnd(i+3)*1.5,alpha=(.08+rnd(i+91)*.4)*(front>.15?1:.42);ctx.fillStyle=i%9===0?'rgba(224,249,255,'+alpha+')':'rgba(0,177,245,'+alpha+')';ctx.beginPath();ctx.ellipse(x,y,size*2,size*.7,a,0,Math.PI*2);ctx.fill()}
-  ctx.restore();
-  const hr=R*.43,shadow=ctx.createRadialGradient(0,0,hr*.83,0,0,hr*1.12);shadow.addColorStop(0,'#000105');shadow.addColorStop(.88,'#000105');shadow.addColorStop(.965,'#01040a');shadow.addColorStop(1,'rgba(0,194,255,.22)');ctx.shadowBlur=30;ctx.shadowColor='rgba(0,160,255,.2)';ctx.fillStyle=shadow;ctx.beginPath();ctx.ellipse(0,0,hr,hr*.68,0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.restore();
-  // Bright near-side arc.
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(1,.34);const fg=ctx.createLinearGradient(-R*.9,0,R*.9,0);fg.addColorStop(0,'rgba(0,110,195,0)');fg.addColorStop(.23,'rgba(0,174,255,.55)');fg.addColorStop(.42,'rgba(230,250,255,.98)');fg.addColorStop(.54,'rgba(0,200,255,.92)');fg.addColorStop(.78,'rgba(0,112,210,.45)');fg.addColorStop(1,'rgba(0,80,150,0)');ctx.strokeStyle=fg;ctx.lineWidth=R*.035;ctx.shadowBlur=22;ctx.shadowColor='#20bdff';ctx.beginPath();ctx.ellipse(0,0,R*.91,R*.47,0,.06,Math.PI*.92);ctx.stroke();ctx.restore();
-  const fade=ctx.createLinearGradient(0,0,w*.72,0);fade.addColorStop(0,'rgba(2,7,18,.96)');fade.addColorStop(.46,'rgba(2,7,18,.76)');fade.addColorStop(.78,'rgba(2,7,18,.16)');fade.addColorStop(1,'rgba(2,7,18,0)');ctx.fillStyle=fade;ctx.fillRect(0,0,w,h);if(!reduced)raf=requestAnimationFrame(draw)
- }
- function start(){cancelAnimationFrame(raf);last=0;if(reduced)draw(0);else raf=requestAnimationFrame(draw)}
- const ro=new ResizeObserver(()=>{resize();start()});ro.observe(canvas);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else start()});resize();start()
-})();
+const v=document.querySelector('video');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(v){v.playbackRate=reduce?1:.68;v.addEventListener('loadedmetadata',()=>{v.playbackRate=reduce?1:.68});}
 </script>
 </body>
 </html>
