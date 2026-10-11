@@ -10,7 +10,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#02050b}
 main{position:relative;width:100%;height:100%;height:100svh;overflow:hidden;background:#02050b}
-video{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;object-position:center;display:block;filter:brightness(.78) saturate(.88);transform:scale(1.025);animation:cinematic-drift 32s ease-in-out infinite alternate}
+video{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;object-position:center;display:block;filter:brightness(.78) saturate(1.2) hue-rotate(170deg);transform:scale(1.025);animation:cinematic-drift 32s ease-in-out infinite alternate}
 main:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 65% 48%,transparent 25%,rgba(0,4,12,.16) 72%,rgba(0,3,9,.42) 100%),linear-gradient(90deg,rgba(0,4,12,.22),transparent 45%,rgba(0,4,12,.08))}
 @keyframes cinematic-drift{from{transform:scale(1.025) translate3d(0,0,0)}to{transform:scale(1.09) translate3d(-.6%,.25%,0)}}
 @media(prefers-reduced-motion:reduce){video{animation:none;transform:scale(1.025)}}
@@ -18,7 +18,7 @@ main:after{content:"";position:absolute;inset:0;pointer-events:none;background:r
 </head>
 <body>
 <main aria-label="Full-screen cinematic black hole video">
-<video autoplay muted loop playsinline preload="auto" aria-label="Slow rotating black hole and accretion disk">
+<video autoplay muted loop playsinline preload="auto" aria-label="Slow rotating blue black hole and accretion disk">
 <source src="https://svs.gsfc.nasa.gov/vis/a010000/a013300/a013326/BH_AccretionDisk_Sim_360_wide_16x9_1080.webm" type="video/webm">
 <source src="https://svs.gsfc.nasa.gov/vis/a010000/a013300/a013326/BH_AccretionDisk_Sim_360_wide_16x9_1080.mp4" type="video/mp4">
 </video>
