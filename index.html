@@ -86,6 +86,19 @@ background-image:linear-gradient(rgba(2,7,16,.08),rgba(2,7,16,.26)),url("data:im
 background-size:cover;background-position:center;background-repeat:no-repeat}
 #grid{display:none!important}
 section{background:rgba(3,8,18,.08)!important}
+
+/* Slow, organic data pulse: breathing light and subtle moving signal lines. */
+#scene{animation:corridor-breathe 8s ease-in-out infinite alternate;will-change:filter,opacity}
+#scene::before{content:"";position:absolute;inset:-3%;pointer-events:none;opacity:.34;
+background:repeating-linear-gradient(180deg,transparent 0px,transparent 13px,rgba(50,176,230,.12) 14px,transparent 15px),linear-gradient(90deg,transparent 0%,rgba(0,191,255,.08) 48%,transparent 100%);
+background-size:100% 180px,100% 100%;animation:data-stream 16s linear infinite}
+#scene::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.32;
+background:radial-gradient(ellipse at 50% 52%,rgba(0,174,255,.18) 0%,transparent 42%),radial-gradient(ellipse at 50% 52%,transparent 28%,rgba(67,183,255,.10) 48%,transparent 72%);
+animation:energy-pulse 5.5s ease-in-out infinite}
+@keyframes corridor-breathe{0%{filter:brightness(.84) saturate(.9)}50%{filter:brightness(1.08) saturate(1.12)}100%{filter:brightness(.92) saturate(1.02)}}
+@keyframes data-stream{from{background-position:0 -180px,0 0}to{background-position:0 0,0 0}}
+@keyframes energy-pulse{0%,100%{opacity:.18;transform:scale(.985)}50%{opacity:.52;transform:scale(1.025)}}
+@media(prefers-reduced-motion:reduce){#scene,#scene::before,#scene::after{animation:none!important;will-change:auto}}
 </style>
 </head>
 <body>
