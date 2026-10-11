@@ -99,6 +99,15 @@ animation:energy-pulse 5.5s ease-in-out infinite}
 @keyframes data-stream{from{background-position:0 -180px,0 0}to{background-position:0 0,0 0}}
 @keyframes energy-pulse{0%,100%{opacity:.18;transform:scale(.985)}50%{opacity:.52;transform:scale(1.025)}}
 @media(prefers-reduced-motion:reduce){#scene,#scene::before,#scene::after{animation:none!important;will-change:auto}}
+
+/* Use the actual repository preview image for the post-hero corridor background. */
+#scene{
+  background-image:linear-gradient(rgba(2,7,17,.28),rgba(2,7,17,.42)),url("./preview.webp")!important;
+  background-size:cover!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  opacity:.96!important;
+}
 </style>
 </head>
 <body>
