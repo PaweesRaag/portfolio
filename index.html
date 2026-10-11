@@ -43,61 +43,31 @@ h1{margin:0 0 13px;font-size:clamp(26px,2.7vw,43px);line-height:1.04;letter-spac
 </main>
 <script>
 (()=>{
- const canvas=document.getElementById('hole'),ctx=canvas.getContext('2d',{alpha:false});
- if(!ctx)return;
- const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- let w=0,h=0,dpr=1,raf=0,last=0,t=0,particles=[];
- const rand=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v)};
- function resize(){
-  dpr=Math.min(devicePixelRatio||1,1.5);w=canvas.clientWidth;h=canvas.clientHeight;
-  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-  particles=[];const count=Math.min(1700,Math.floor(w*h/620));
-  for(let i=0;i<count;i++)particles.push({a:rand(i+4)*Math.PI*2,r:.78+rand(i+99)*.52,s:.25+rand(i+51)*.8,size:.35+rand(i+18)*1.4,bright:rand(i+80)});
- }
+ const canvas=document.getElementById('hole'),ctx=canvas.getContext('2d',{alpha:false});if(!ctx)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;let w=0,h=0,dpr=1,raf=0,last=0,time=0,stars=[];
+ const rnd=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v)};
+ function resize(){dpr=Math.min(devicePixelRatio||1,1.5);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:450},(_,i)=>({x:rnd(i+8)*w,y:rnd(i+99)*h,r:.3+rnd(i+34)*1.1,a:.12+rnd(i+65)*.55}))}
  function draw(now){
-  const dt=last?Math.min((now-last)/1000,.04):0;last=now;if(!reduced)t+=dt;
-  ctx.fillStyle='#020712';ctx.fillRect(0,0,w,h);
-  const cx=w*.755,cy=h*.535,rx=Math.min(w*.31,h*.54),ry=rx*.31,tilt=-.14;
-  const bg=ctx.createRadialGradient(cx,cy,1,cx,cy,Math.max(w,h)*.7);bg.addColorStop(0,'rgba(0,62,104,.24)');bg.addColorStop(.45,'rgba(0,26,48,.12)');bg.addColorStop(1,'rgba(2,7,18,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
-  // Atmospheric glow surrounding the disk.
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);
-  let glow=ctx.createRadialGradient(0,0,rx*.35,0,0,rx*1.3);glow.addColorStop(0,'rgba(0,0,0,0)');glow.addColorStop(.48,'rgba(0,107,177,.025)');glow.addColorStop(.73,'rgba(0,170,235,.10)');glow.addColorStop(1,'rgba(0,70,130,0)');ctx.scale(1,ry/rx);ctx.fillStyle=glow;ctx.beginPath();ctx.arc(0,0,rx*1.3,0,Math.PI*2);ctx.fill();ctx.restore();
-  // Layered elliptical accretion bands, rotating slowly in opposing perspective layers.
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);
-  for(let layer=0;layer<7;layer++){
-   const scale=1.0+layer*.075, yscale=.22+layer*.035;
-   ctx.save();ctx.scale(1,yscale);
-   const rg=ctx.createLinearGradient(-rx*scale,-rx*.12,rx*scale,rx*.12);
-   rg.addColorStop(0,'rgba(0,65,130,0)');rg.addColorStop(.22,'rgba(0,158,235,'+(.08+layer*.012)+')');rg.addColorStop(.44,'rgba(76,204,255,'+(.2+layer*.015)+')');rg.addColorStop(.52,'rgba(231,250,255,'+(.76-layer*.055)+')');rg.addColorStop(.61,'rgba(0,174,255,'+(.25+layer*.01)+')');rg.addColorStop(.82,'rgba(0,104,190,.12)');rg.addColorStop(1,'rgba(0,60,130,0)');
-   ctx.strokeStyle=rg;ctx.lineWidth=(layer===1?7:2.5+layer*.7);ctx.shadowBlur=layer<3?18:7;ctx.shadowColor='#00aaff';
-   ctx.beginPath();ctx.ellipse(0,0,rx*scale,rx*scale*(.7+layer*.025),t*.045*(layer%2?1:-1),.06+layer*.02,Math.PI*1.94);ctx.stroke();ctx.restore();
-  }
-  // Fine rotating filaments and bright knots make the ring feel fluid, not mechanical.
-  ctx.save();ctx.scale(1,.31);
-  for(const p of particles){
-   const a=p.a+t*(.065+p.s*.07)*(p.bright>.5?1:-.72);
-   const rr=rx*p.r*(1+.018*Math.sin(t*.42+p.a*5));
-   const x=Math.cos(a)*rr,y=Math.sin(a)*rr;
-   const front=Math.sin(a);
-   let alpha=(.08+p.bright*.32)*(0.45+Math.max(0,front)*.55);
-   if(p.r>.98)alpha*=.5;
-   ctx.fillStyle=p.bright>.82?'rgba(225,249,255,'+alpha+')':'rgba(0,178,245,'+alpha+')';
-   ctx.beginPath();ctx.ellipse(x,y,p.size*(p.bright>.85?2.2:1),p.size*.75, a,0,Math.PI*2);ctx.fill();
-  }
+  const dt=last?Math.min((now-last)/1000,.04):0;last=now;if(!reduced)time+=dt;ctx.fillStyle='#020712';ctx.fillRect(0,0,w,h);
+  const cx=w*.755,cy=h*.535,R=Math.min(w*.34,h*.57),rot=-.16;
+  const bg=ctx.createRadialGradient(cx,cy,2,cx,cy,R*1.8);bg.addColorStop(0,'rgba(0,76,128,.22)');bg.addColorStop(.5,'rgba(0,35,66,.13)');bg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  for(const s of stars){ctx.fillStyle='rgba(115,204,255,'+(s.a*(.8+.2*Math.sin(time+s.x*.02))+0.03)+')';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill()}
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(1,.34);let haze=ctx.createRadialGradient(0,0,R*.25,0,0,R*1.45);haze.addColorStop(0,'rgba(0,0,0,0)');haze.addColorStop(.36,'rgba(0,95,160,.04)');haze.addColorStop(.62,'rgba(0,165,235,.16)');haze.addColorStop(.78,'rgba(0,105,190,.09)');haze.addColorStop(1,'rgba(0,20,45,0)');ctx.fillStyle=haze;ctx.beginPath();ctx.arc(0,0,R*1.45,0,Math.PI*2);ctx.fill();ctx.restore();
+  // Far-side lensing arc.
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);const back=ctx.createLinearGradient(-R,-R*.15,R,R*.15);back.addColorStop(0,'rgba(0,125,205,0)');back.addColorStop(.25,'rgba(0,160,230,.24)');back.addColorStop(.48,'rgba(155,230,255,.72)');back.addColorStop(.57,'rgba(0,165,245,.5)');back.addColorStop(1,'rgba(0,95,175,0)');ctx.strokeStyle=back;ctx.lineWidth=R*.045;ctx.shadowBlur=24;ctx.shadowColor='#008dce';ctx.beginPath();ctx.ellipse(0,0,R*1.08,R*.40,0,Math.PI*1.04,Math.PI*1.98);ctx.stroke();ctx.restore();
+  // Uneven layers of the luminous disk.
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);
+  for(let i=0;i<15;i++){const f=.69+i*.027,phase=time*(i%2?-.09:.07);ctx.save();ctx.translate(Math.sin(phase)*R*.025,Math.cos(phase)*R*.012);ctx.scale(1,.34);const grad=ctx.createLinearGradient(-R*f,-R*.12,R*f,R*.12);grad.addColorStop(0,'rgba(0,65,130,0)');grad.addColorStop(.17,'rgba(0,126,205,.10)');grad.addColorStop(.34,'rgba(0,174,245,.40)');grad.addColorStop(.46,'rgba(104,218,255,.75)');grad.addColorStop(.51,'rgba(242,252,255,.98)');grad.addColorStop(.56,'rgba(0,191,255,.8)');grad.addColorStop(.72,'rgba(0,118,210,.28)');grad.addColorStop(1,'rgba(0,65,140,0)');ctx.strokeStyle=grad;ctx.lineWidth=i%4===0?R*.016:R*.006;ctx.globalAlpha=.52+(i%5)*.08;ctx.shadowBlur=i%4===0?18:7;ctx.shadowColor='#1bbcff';ctx.beginPath();ctx.ellipse(0,0,R*f,R*.55*f,0,.04+Math.sin(time*.08+i)*.035,Math.PI*1.96);ctx.stroke();ctx.restore()}
+  ctx.globalAlpha=1;ctx.save();ctx.scale(1,.34);
+  for(let i=0;i<230;i++){const a=rnd(i+12)*Math.PI*2+time*(.07+rnd(i+41)*.08),rr=R*(.72+rnd(i+73)*.53),x=Math.cos(a)*rr,y=Math.sin(a)*rr,front=Math.sin(a),size=.4+rnd(i+3)*1.5,alpha=(.08+rnd(i+91)*.4)*(front>.15?1:.42);ctx.fillStyle=i%9===0?'rgba(224,249,255,'+alpha+')':'rgba(0,177,245,'+alpha+')';ctx.beginPath();ctx.ellipse(x,y,size*2,size*.7,a,0,Math.PI*2);ctx.fill()}
   ctx.restore();
-  // The event horizon occludes the disk; a soft, thin rim keeps the silhouette crisp.
-  const holeR=rx*.36;
-  const shade=ctx.createRadialGradient(0,0,holeR*.8,0,0,holeR*1.14);shade.addColorStop(0,'#000105');shade.addColorStop(.86,'#000105');shade.addColorStop(.96,'#01040a');shade.addColorStop(1,'rgba(0,190,255,.24)');
-  ctx.shadowBlur=24;ctx.shadowColor='rgba(0,153,255,.18)';ctx.fillStyle=shade;ctx.beginPath();ctx.ellipse(0,0,holeR,holeR*.66,0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-  ctx.restore();
-  // Dim the left side behind the portfolio typography, preserving the cinematic scene.
-  const fade=ctx.createLinearGradient(0,0,w*.67,0);fade.addColorStop(0,'rgba(2,7,18,.92)');fade.addColorStop(.48,'rgba(2,7,18,.68)');fade.addColorStop(1,'rgba(2,7,18,0)');ctx.fillStyle=fade;ctx.fillRect(0,0,w,h);
-  if(!reduced)raf=requestAnimationFrame(draw);
+  const hr=R*.43,shadow=ctx.createRadialGradient(0,0,hr*.83,0,0,hr*1.12);shadow.addColorStop(0,'#000105');shadow.addColorStop(.88,'#000105');shadow.addColorStop(.965,'#01040a');shadow.addColorStop(1,'rgba(0,194,255,.22)');ctx.shadowBlur=30;ctx.shadowColor='rgba(0,160,255,.2)';ctx.fillStyle=shadow;ctx.beginPath();ctx.ellipse(0,0,hr,hr*.68,0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.restore();
+  // Bright near-side arc.
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(1,.34);const fg=ctx.createLinearGradient(-R*.9,0,R*.9,0);fg.addColorStop(0,'rgba(0,110,195,0)');fg.addColorStop(.23,'rgba(0,174,255,.55)');fg.addColorStop(.42,'rgba(230,250,255,.98)');fg.addColorStop(.54,'rgba(0,200,255,.92)');fg.addColorStop(.78,'rgba(0,112,210,.45)');fg.addColorStop(1,'rgba(0,80,150,0)');ctx.strokeStyle=fg;ctx.lineWidth=R*.035;ctx.shadowBlur=22;ctx.shadowColor='#20bdff';ctx.beginPath();ctx.ellipse(0,0,R*.91,R*.47,0,.06,Math.PI*.92);ctx.stroke();ctx.restore();
+  const fade=ctx.createLinearGradient(0,0,w*.72,0);fade.addColorStop(0,'rgba(2,7,18,.96)');fade.addColorStop(.46,'rgba(2,7,18,.76)');fade.addColorStop(.78,'rgba(2,7,18,.16)');fade.addColorStop(1,'rgba(2,7,18,0)');ctx.fillStyle=fade;ctx.fillRect(0,0,w,h);if(!reduced)raf=requestAnimationFrame(draw)
  }
  function start(){cancelAnimationFrame(raf);last=0;if(reduced)draw(0);else raf=requestAnimationFrame(draw)}
- const ro=new ResizeObserver(()=>{resize();start()});ro.observe(canvas);
- document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else start()});
- resize();start();
+ const ro=new ResizeObserver(()=>{resize();start()});ro.observe(canvas);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else start()});resize();start()
 })();
 </script>
 </body>
