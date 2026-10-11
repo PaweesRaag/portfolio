@@ -7,18 +7,18 @@
 <meta name="description" content="Sohom Chandra — personal cybersecurity portfolio. Under the surface.">
 <title>Sohom Chandra — Under the Surface</title>
 <style>
-:root{color-scheme:dark;--void:#030914;--cyan:#00c8f5;--ice:#eaf8ff;--muted:#8fa8bb}
+:root{color-scheme:dark;--void:#030914;--cyan:#00c8f5;--ice:#eaf8ff}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--void);color:var(--ice);font-family:Arial,Helvetica,sans-serif}
 body{overflow:hidden}
-#scene{position:relative;isolation:isolate;height:100svh;min-height:620px;width:100%;overflow:hidden;background:radial-gradient(ellipse at 73% 49%,#071a2d 0,#040d1b 37%,#030914 68%,#020610 100%)}
+#scene{position:relative;isolation:isolate;height:100svh;min-height:600px;width:100%;overflow:hidden;background:#020712}
 #hole{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
-#vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,7,17,.12),transparent 58%),linear-gradient(0deg,rgba(2,7,17,.6),transparent 25%);z-index:0}
+#vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,7,17,.25),rgba(2,7,17,.02) 56%,rgba(2,7,17,.12)),linear-gradient(0deg,rgba(2,7,17,.52),transparent 35%);z-index:0}
 nav{position:absolute;z-index:2;top:31px;left:5.5%;right:5.5%;display:flex;align-items:center;gap:clamp(18px,2.4vw,38px)}
 .brand{font-weight:900;font-size:27px;letter-spacing:-1.5px;color:#f2f8fc;margin-right:5px}
 nav a{font-size:12px;letter-spacing:.055em;color:#b8c8d5;text-transform:uppercase;text-decoration:none;transition:color .2s}
 nav a:hover,nav a:focus-visible{color:var(--cyan)}
-.hero-copy{position:absolute;z-index:2;left:5.8%;top:49%;transform:translateY(-43%);width:min(47vw,720px);text-shadow:0 2px 24px rgba(2,7,17,.75)}
+.hero-copy{position:absolute;z-index:2;left:5.8%;top:49%;transform:translateY(-43%);width:min(47vw,720px);text-shadow:0 2px 24px rgba(2,7,17,.8)}
 .eyebrow{margin:0 0 19px;color:var(--cyan);font:500 clamp(10px,.88vw,13px)/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em}
 h1{margin:0 0 13px;font-size:clamp(26px,2.7vw,43px);line-height:1.04;letter-spacing:.005em;font-weight:800}
 .tagline{margin:0;font-size:clamp(46px,6.05vw,94px);font-weight:900;line-height:.91;letter-spacing:-.045em;text-transform:uppercase}
@@ -29,101 +29,69 @@ h1{margin:0 0 13px;font-size:clamp(26px,2.7vw,43px);line-height:1.04;letter-spac
 .scroll-line:after{content:"";position:absolute;left:-4px;bottom:2px;width:8px;height:8px;border-right:1px solid var(--cyan);border-bottom:1px solid var(--cyan);transform:rotate(45deg)}
 .status{position:absolute;right:5.5%;bottom:5.3%;font:10px ui-monospace,monospace;letter-spacing:.16em;color:rgba(111,190,219,.58);z-index:2}
 @keyframes blink{50%{opacity:0}}
-@media(max-width:700px){
- #scene{min-height:600px}
- nav{left:6%;right:6%;top:23px;gap:clamp(10px,3vw,18px)}.brand{font-size:22px;margin-right:0}nav a{font-size:9px;letter-spacing:0}
- .hero-copy{left:6%;top:35%;transform:none;width:88vw}
- h1{font-size:clamp(24px,6vw,34px)}.tagline{font-size:clamp(45px,10.7vw,72px)}
- .scroll{left:6%;bottom:4%}.scroll-line{height:38px}.status{right:6%;bottom:4%;font-size:8px}
-}
+@media(max-width:700px){#scene{min-height:600px}nav{left:6%;right:6%;top:23px;gap:clamp(10px,3vw,18px)}.brand{font-size:22px;margin-right:0}nav a{font-size:9px;letter-spacing:0}.hero-copy{left:6%;top:35%;transform:none;width:88vw}h1{font-size:clamp(24px,6vw,34px)}.tagline{font-size:clamp(45px,10.7vw,72px)}.scroll{left:6%;bottom:4%}.scroll-line{height:38px}.status{right:6%;bottom:4%;font-size:8px}}
 @media(max-width:390px){nav{gap:9px}.brand{font-size:20px}nav a{font-size:8px}.hero-copy{top:34%}}
 @media(prefers-reduced-motion:reduce){.cursor{animation:none;opacity:1}nav a{transition:none}}
 </style>
 </head>
 <body>
 <main id="scene" aria-label="Sohom Chandra personal cybersecurity portfolio">
- <canvas id="hole" aria-hidden="true"></canvas>
- <div id="vignette" aria-hidden="true"></div>
+ <canvas id="hole" aria-hidden="true"></canvas><div id="vignette" aria-hidden="true"></div>
  <nav aria-label="Portfolio navigation"><span class="brand">SC</span><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav>
- <section class="hero-copy" aria-labelledby="hero-title">
-  <p class="eyebrow">// PERSONAL CYBERSECURITY PORTFOLIO</p>
-  <h1 id="hero-title">SOHOM CHANDRA</h1>
-  <p class="tagline">UNDER THE<br>SURFACE<span class="cursor" aria-hidden="true"></span></p>
-  <div class="rule" aria-hidden="true"></div>
- </section>
- <div class="scroll">SCROLL<div class="scroll-line" aria-hidden="true"></div></div>
- <div class="status">SYSTEM STUDY &nbsp; / &nbsp; 001</div>
+ <section class="hero-copy" aria-labelledby="hero-title"><p class="eyebrow">// PERSONAL CYBERSECURITY PORTFOLIO</p><h1 id="hero-title">SOHOM CHANDRA</h1><p class="tagline">UNDER THE<br>SURFACE<span class="cursor" aria-hidden="true"></span></p><div class="rule" aria-hidden="true"></div></section>
+ <div class="scroll">SCROLL<div class="scroll-line" aria-hidden="true"></div></div><div class="status">EVENT HORIZON &nbsp; / &nbsp; 001</div>
 </main>
 <script>
-(() => {
- const canvas=document.getElementById('hole'),ctx=canvas.getContext('2d',{alpha:true});
+(()=>{
+ const canvas=document.getElementById('hole'),ctx=canvas.getContext('2d',{alpha:false});
  if(!ctx)return;
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const glyphs='01{}[]<>/\\|:;+=-*░▒▓·';
- let w=0,h=0,dpr=1,raf=0,last=0,time=0,cell=11,points=[];
- const random=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+ let w=0,h=0,dpr=1,raf=0,last=0,t=0,particles=[];
+ const rand=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v)};
  function resize(){
-  dpr=Math.min(window.devicePixelRatio||1,1.5);w=canvas.clientWidth;h=canvas.clientHeight;
+  dpr=Math.min(devicePixelRatio||1,1.5);w=canvas.clientWidth;h=canvas.clientHeight;
   canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-  cell=w<700?10:11;points=[];
-  const cw=cell*.78,ch=cell*1.08,cols=Math.ceil(w/cw),rows=Math.ceil(h/ch);
-  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
-   const px=x*cw,py=y*ch,nx=px/w,ny=py/h;
-   // Elliptical tilted disk, with a larger, clearly readable void at its center.
-   const dx=(nx-.755),dy=(ny-.515),a=-.16;
-   const rx=dx*Math.cos(a)-dy*Math.sin(a),ry=dx*Math.sin(a)+dy*Math.cos(a);
-   const r=Math.sqrt((rx/.29)**2+(ry/.125)**2);
-   const inner=Math.sqrt((rx/.105)**2+(ry/.064)**2);
-   const ring=Math.exp(-Math.pow((r-1)/.14,2));
-   const outer=Math.exp(-Math.pow((r-1.18)/.22,2));
-   const streak=Math.exp(-Math.pow((ry-(.16*rx+.012))/.026,2))*Math.exp(-Math.pow((rx+.03)/.48,2));
-   const texture=random(x+y*cols+17);
-   // Glyphs stay concentrated around the accretion flow; no random full-width bands.
-   let chance=.012+ring*.84+outer*.15+streak*.20;
-   if(inner<1.08)chance*=.008;
-   if(nx<.38)chance*=.10;
-   if(ny<.12||ny>.88)chance*=.38;
-   if(texture<chance)points.push({px,py,nx,ny,rx,ry,r,inner,ring,outer,streak,seed:random(x*7+y*13+5),texture});
-  }
+  particles=[];const count=Math.min(1700,Math.floor(w*h/620));
+  for(let i=0;i<count;i++)particles.push({a:rand(i+4)*Math.PI*2,r:.78+rand(i+99)*.52,s:.25+rand(i+51)*.8,size:.35+rand(i+18)*1.4,bright:rand(i+80)});
  }
- function draw(t){
-  const dt=last?Math.min((t-last)/1000,.04):0;last=t;if(!reduced)time+=dt;
-  ctx.clearRect(0,0,w,h);
-  const cx=w*.755,cy=h*.515;
-  const mist=ctx.createRadialGradient(cx,cy,2,cx,cy,Math.min(w*.49,h*.65));
-  mist.addColorStop(0,'rgba(0,153,219,.075)');mist.addColorStop(.38,'rgba(0,92,158,.045)');mist.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=mist;ctx.fillRect(0,0,w,h);
-  const cw=cell*.78,ch=cell*1.08;ctx.font=cell+'px Consolas,"Courier New",monospace';ctx.textBaseline='top';
-  // Gentle, curved luminous trails establish the disk before the glyphs are drawn.
-  ctx.save();ctx.globalCompositeOperation='screen';
-  for(let i=0;i<8;i++){
-   const offset=(i-3.5)*cell*1.05;
-   const x1=w*.37,y1=h*.63+offset*.48,x2=w*.91,y2=h*.40+offset*.34;
-   const g=ctx.createLinearGradient(x1,y1,x2,y2);
-   const alpha=.035+(i%3)*.012;
-   g.addColorStop(0,'rgba(0,190,255,0)');g.addColorStop(.32,'rgba(0,190,255,'+alpha+')');g.addColorStop(.68,'rgba(132,226,255,'+(alpha*2.3)+')');g.addColorStop(1,'rgba(0,190,255,0)');
-   ctx.strokeStyle=g;ctx.lineWidth=i===3?1.3:.7;ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(w*.54,y1-h*.10,w*.69,y2+h*.10,x2,y2);ctx.stroke();
+ function draw(now){
+  const dt=last?Math.min((now-last)/1000,.04):0;last=now;if(!reduced)t+=dt;
+  ctx.fillStyle='#020712';ctx.fillRect(0,0,w,h);
+  const cx=w*.755,cy=h*.535,rx=Math.min(w*.31,h*.54),ry=rx*.31,tilt=-.14;
+  const bg=ctx.createRadialGradient(cx,cy,1,cx,cy,Math.max(w,h)*.7);bg.addColorStop(0,'rgba(0,62,104,.24)');bg.addColorStop(.45,'rgba(0,26,48,.12)');bg.addColorStop(1,'rgba(2,7,18,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  // Atmospheric glow surrounding the disk.
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);
+  let glow=ctx.createRadialGradient(0,0,rx*.35,0,0,rx*1.3);glow.addColorStop(0,'rgba(0,0,0,0)');glow.addColorStop(.48,'rgba(0,107,177,.025)');glow.addColorStop(.73,'rgba(0,170,235,.10)');glow.addColorStop(1,'rgba(0,70,130,0)');ctx.scale(1,ry/rx);ctx.fillStyle=glow;ctx.beginPath();ctx.arc(0,0,rx*1.3,0,Math.PI*2);ctx.fill();ctx.restore();
+  // Layered elliptical accretion bands, rotating slowly in opposing perspective layers.
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);
+  for(let layer=0;layer<7;layer++){
+   const scale=1.0+layer*.075, yscale=.22+layer*.035;
+   ctx.save();ctx.scale(1,yscale);
+   const rg=ctx.createLinearGradient(-rx*scale,-rx*.12,rx*scale,rx*.12);
+   rg.addColorStop(0,'rgba(0,65,130,0)');rg.addColorStop(.22,'rgba(0,158,235,'+(.08+layer*.012)+')');rg.addColorStop(.44,'rgba(76,204,255,'+(.2+layer*.015)+')');rg.addColorStop(.52,'rgba(231,250,255,'+(.76-layer*.055)+')');rg.addColorStop(.61,'rgba(0,174,255,'+(.25+layer*.01)+')');rg.addColorStop(.82,'rgba(0,104,190,.12)');rg.addColorStop(1,'rgba(0,60,130,0)');
+   ctx.strokeStyle=rg;ctx.lineWidth=(layer===1?7:2.5+layer*.7);ctx.shadowBlur=layer<3?18:7;ctx.shadowColor='#00aaff';
+   ctx.beginPath();ctx.ellipse(0,0,rx*scale,rx*scale*(.7+layer*.025),t*.045*(layer%2?1:-1),.06+layer*.02,Math.PI*1.94);ctx.stroke();ctx.restore();
+  }
+  // Fine rotating filaments and bright knots make the ring feel fluid, not mechanical.
+  ctx.save();ctx.scale(1,.31);
+  for(const p of particles){
+   const a=p.a+t*(.065+p.s*.07)*(p.bright>.5?1:-.72);
+   const rr=rx*p.r*(1+.018*Math.sin(t*.42+p.a*5));
+   const x=Math.cos(a)*rr,y=Math.sin(a)*rr;
+   const front=Math.sin(a);
+   let alpha=(.08+p.bright*.32)*(0.45+Math.max(0,front)*.55);
+   if(p.r>.98)alpha*=.5;
+   ctx.fillStyle=p.bright>.82?'rgba(225,249,255,'+alpha+')':'rgba(0,178,245,'+alpha+')';
+   ctx.beginPath();ctx.ellipse(x,y,p.size*(p.bright>.85?2.2:1),p.size*.75, a,0,Math.PI*2);ctx.fill();
   }
   ctx.restore();
-  for(const p of points){
-   const shimmer=.83+.17*Math.sin(time*1.15+p.seed*12);
-   let alpha=(.13+p.outer*.18+p.ring*.68+p.streak*.2)*shimmer;
-   if(p.inner<1.04)alpha*=.012;
-   if(p.r>1.48)alpha*=.22;
-   if(p.nx<.38)alpha*=.45;
-   if(alpha<.055)continue;
-   const hot=Math.min(1,p.ring*.7+p.streak*.9);
-   ctx.fillStyle=hot>.48?'rgba(204,247,255,'+Math.min(.95,alpha+hot*.23)+')':'rgba(30,174,222,'+alpha+')';
-   const i=Math.floor((p.seed*glyphs.length+time*1.3)%glyphs.length);
-   ctx.fillText(glyphs[(i+glyphs.length)%glyphs.length],p.px,p.py);
-  }
-  // Large, clean event horizon with a restrained luminous rim.
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(-.16);ctx.scale(1,.52);
-  const radius=Math.min(w*.145,h*.28);
-  const shadow=ctx.createRadialGradient(0,0,radius*.72,0,0,radius*1.12);
-  shadow.addColorStop(0,'#01040b');shadow.addColorStop(.82,'#01040b');shadow.addColorStop(.96,'rgba(1,7,16,.98)');shadow.addColorStop(1,'rgba(0,200,245,.15)');
-  ctx.beginPath();ctx.arc(0,0,radius,0,Math.PI*2);ctx.fillStyle=shadow;ctx.fill();
-  ctx.setLineDash([1.1,5.5]);ctx.lineWidth=1.35;ctx.strokeStyle='rgba(193,240,255,.72)';ctx.beginPath();ctx.arc(0,0,radius*1.015,0,Math.PI*2);ctx.stroke();ctx.restore();
+  // The event horizon occludes the disk; a soft, thin rim keeps the silhouette crisp.
+  const holeR=rx*.36;
+  const shade=ctx.createRadialGradient(0,0,holeR*.8,0,0,holeR*1.14);shade.addColorStop(0,'#000105');shade.addColorStop(.86,'#000105');shade.addColorStop(.96,'#01040a');shade.addColorStop(1,'rgba(0,190,255,.24)');
+  ctx.shadowBlur=24;ctx.shadowColor='rgba(0,153,255,.18)';ctx.fillStyle=shade;ctx.beginPath();ctx.ellipse(0,0,holeR,holeR*.66,0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  ctx.restore();
+  // Dim the left side behind the portfolio typography, preserving the cinematic scene.
+  const fade=ctx.createLinearGradient(0,0,w*.67,0);fade.addColorStop(0,'rgba(2,7,18,.92)');fade.addColorStop(.48,'rgba(2,7,18,.68)');fade.addColorStop(1,'rgba(2,7,18,0)');ctx.fillStyle=fade;ctx.fillRect(0,0,w,h);
   if(!reduced)raf=requestAnimationFrame(draw);
  }
  function start(){cancelAnimationFrame(raf);last=0;if(reduced)draw(0);else raf=requestAnimationFrame(draw)}
