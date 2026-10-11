@@ -4,43 +4,47 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#030914">
-<title>Black Hole Study — Sohom Chandra</title>
+<meta name="description" content="Sohom Chandra — personal cybersecurity portfolio. Under the surface.">
+<title>Sohom Chandra — Under the Surface</title>
 <style>
-:root{color-scheme:dark;--void:#030914;--cyan:#00c8f5;--ice:#eaf8ff;--steel:#0b2b48}
+:root{color-scheme:dark;--void:#030914;--cyan:#00c8f5;--ice:#eaf8ff;--muted:#8fa8bb}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--void);color:var(--ice);font-family:Arial,Helvetica,sans-serif}
 body{overflow:hidden}
-#scene{position:relative;isolation:isolate;min-height:100svh;width:100%;overflow:hidden;background:radial-gradient(ellipse at 72% 51%,#061426 0,#030914 48%,#020711 100%)}
+#scene{position:relative;isolation:isolate;height:100svh;min-height:620px;width:100%;overflow:hidden;background:radial-gradient(ellipse at 73% 49%,#071a2d 0,#040d1b 37%,#030914 68%,#020610 100%)}
 #hole{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
-#vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,7,17,.35),transparent 48%),linear-gradient(0deg,rgba(2,7,17,.48),transparent 28%);z-index:0}
-nav{position:absolute;z-index:2;top:28px;left:5.4%;display:flex;align-items:center;gap:28px}
-.brand{font-weight:800;font-size:25px;letter-spacing:-1px;color:#f2f8fc}
-nav span:not(.brand){font-size:12px;color:#b7c6d4;text-transform:uppercase}
-.hero-copy{position:absolute;z-index:2;left:5.8%;top:50%;transform:translateY(-43%);max-width:44vw;text-shadow:0 2px 20px rgba(2,7,17,.6)}
-.eyebrow{margin:0 0 14px;color:var(--cyan);font:500 clamp(10px,1vw,15px)/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.025em}
-h1{margin:0 0 13px;font-size:clamp(26px,2.75vw,46px);line-height:1.03;letter-spacing:.015em;font-weight:800}
-.tagline{margin:0;font-size:clamp(43px,5.9vw,96px);font-weight:900;line-height:.98;letter-spacing:-.035em;text-transform:uppercase}
-.cursor{display:inline-block;width:.24em;height:.53em;background:var(--cyan);margin-left:.08em;vertical-align:-.04em;animation:blink 1.05s steps(1,end) infinite}
-.rule{width:128px;height:8px;background:#073158;margin-top:26px}
-.scroll{position:absolute;left:5.4%;bottom:5.5%;z-index:2;color:var(--cyan);font:12px ui-monospace,monospace;letter-spacing:.02em}
-.scroll-line{height:68px;width:1px;background:var(--cyan);margin:15px 0 0 19px;position:relative}
-.scroll-line:after{content:"";position:absolute;left:-5px;bottom:2px;width:10px;height:10px;border-right:1px solid var(--cyan);border-bottom:1px solid var(--cyan);transform:rotate(45deg)}
-.status{position:absolute;right:24px;bottom:20px;font:10px ui-monospace,monospace;letter-spacing:.12em;color:rgba(94,190,222,.55);z-index:2}
+#vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,7,17,.12),transparent 58%),linear-gradient(0deg,rgba(2,7,17,.6),transparent 25%);z-index:0}
+nav{position:absolute;z-index:2;top:31px;left:5.5%;right:5.5%;display:flex;align-items:center;gap:clamp(18px,2.4vw,38px)}
+.brand{font-weight:900;font-size:27px;letter-spacing:-1.5px;color:#f2f8fc;margin-right:5px}
+nav a{font-size:12px;letter-spacing:.055em;color:#b8c8d5;text-transform:uppercase;text-decoration:none;transition:color .2s}
+nav a:hover,nav a:focus-visible{color:var(--cyan)}
+.hero-copy{position:absolute;z-index:2;left:5.8%;top:49%;transform:translateY(-43%);width:min(47vw,720px);text-shadow:0 2px 24px rgba(2,7,17,.75)}
+.eyebrow{margin:0 0 19px;color:var(--cyan);font:500 clamp(10px,.88vw,13px)/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em}
+h1{margin:0 0 13px;font-size:clamp(26px,2.7vw,43px);line-height:1.04;letter-spacing:.005em;font-weight:800}
+.tagline{margin:0;font-size:clamp(46px,6.05vw,94px);font-weight:900;line-height:.91;letter-spacing:-.045em;text-transform:uppercase}
+.cursor{display:inline-block;width:.19em;height:.49em;background:var(--cyan);margin-left:.09em;vertical-align:-.015em;box-shadow:0 0 16px rgba(0,200,245,.4);animation:blink 1.05s steps(1,end) infinite}
+.rule{width:112px;height:2px;background:var(--cyan);opacity:.8;margin-top:27px;box-shadow:0 0 12px rgba(0,200,245,.4)}
+.scroll{position:absolute;left:5.8%;bottom:5%;z-index:2;color:var(--cyan);font:11px ui-monospace,monospace;letter-spacing:.12em}
+.scroll-line{height:54px;width:1px;background:linear-gradient(var(--cyan),rgba(0,200,245,.12));margin:13px 0 0 17px;position:relative}
+.scroll-line:after{content:"";position:absolute;left:-4px;bottom:2px;width:8px;height:8px;border-right:1px solid var(--cyan);border-bottom:1px solid var(--cyan);transform:rotate(45deg)}
+.status{position:absolute;right:5.5%;bottom:5.3%;font:10px ui-monospace,monospace;letter-spacing:.16em;color:rgba(111,190,219,.58);z-index:2}
 @keyframes blink{50%{opacity:0}}
 @media(max-width:700px){
- nav{left:6%;top:22px;gap:14px}.brand{font-size:22px}nav span:not(.brand){font-size:9px}
- .hero-copy{left:6%;top:37%;transform:none;max-width:88vw}
- h1{font-size:clamp(24px,6vw,36px)}.tagline{font-size:clamp(43px,10.5vw,72px)}
- #hole{opacity:.9}.scroll{bottom:4%;left:6%}.scroll-line{height:45px}
+ #scene{min-height:600px}
+ nav{left:6%;right:6%;top:23px;gap:clamp(10px,3vw,18px)}.brand{font-size:22px;margin-right:0}nav a{font-size:9px;letter-spacing:0}
+ .hero-copy{left:6%;top:35%;transform:none;width:88vw}
+ h1{font-size:clamp(24px,6vw,34px)}.tagline{font-size:clamp(45px,10.7vw,72px)}
+ .scroll{left:6%;bottom:4%}.scroll-line{height:38px}.status{right:6%;bottom:4%;font-size:8px}
 }
-@media(prefers-reduced-motion:reduce){.cursor{animation:none;opacity:1}}
+@media(max-width:390px){nav{gap:9px}.brand{font-size:20px}nav a{font-size:8px}.hero-copy{top:34%}}
+@media(prefers-reduced-motion:reduce){.cursor{animation:none;opacity:1}nav a{transition:none}}
 </style>
 </head>
 <body>
-<main id="scene" aria-label="Animated ASCII black hole study">
+<main id="scene" aria-label="Sohom Chandra personal cybersecurity portfolio">
  <canvas id="hole" aria-hidden="true"></canvas>
  <div id="vignette" aria-hidden="true"></div>
- <nav aria-label="Portfolio navigation"><span class="brand">SC</span><span>About</span><span>Projects</span><span>Experience</span><span>Skills</span><span>Contact</span></nav>
+ <nav aria-label="Portfolio navigation"><span class="brand">SC</span><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav>
  <section class="hero-copy" aria-labelledby="hero-title">
   <p class="eyebrow">// PERSONAL CYBERSECURITY PORTFOLIO</p>
   <h1 id="hero-title">SOHOM CHANDRA</h1>
@@ -48,101 +52,84 @@ h1{margin:0 0 13px;font-size:clamp(26px,2.75vw,46px);line-height:1.03;letter-spa
   <div class="rule" aria-hidden="true"></div>
  </section>
  <div class="scroll">SCROLL<div class="scroll-line" aria-hidden="true"></div></div>
- <div class="status">ASCII ACCRETION STUDY / 001</div>
+ <div class="status">SYSTEM STUDY &nbsp; / &nbsp; 001</div>
 </main>
 <script>
 (() => {
-  const canvas = document.getElementById('hole');
-  const ctx = canvas.getContext('2d', { alpha: true });
-  if (!ctx) return;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const chars = '01{}[]<>/\\|:;+=-*░▒▓·';
-  let w=0,h=0,dpr=1, raf=0, last=0, phase=0, cols=0, rows=0, cw=9, ch=12, font=11, points=[];
-  const rand = (n) => { const x=Math.sin(n*127.1+311.7)*43758.5453; return x-Math.floor(x); };
-
-  function resize(){
-    dpr=Math.min(window.devicePixelRatio||1,1.5);
-    w=canvas.clientWidth; h=canvas.clientHeight;
-    canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    font=w<700?8.5:10.5; cw=font*.78; ch=font*1.16;
-    cols=Math.ceil(w/cw); rows=Math.ceil(h/ch);
-    points=[];
-    // A deterministic field of glyphs; geometry is stable across frames.
-    for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){
-      const nx=x*cw/w, ny=y*ch/h;
-      const dx=(nx-.78), dy=(ny-.53);
-      // Disk is rotated in screen-space: its left end sits lower than its right.
-      const angle=-0.135, rx=dx*Math.cos(angle)-dy*Math.sin(angle), ry=dx*Math.sin(angle)+dy*Math.cos(angle);
-      const dist=Math.sqrt((rx/.64)**2+(ry/.225)**2);
-      const nearDisk=Math.exp(-Math.pow((dist-1)/.16,2));
-      const broadHalo=Math.exp(-Math.pow((dist-1.17)/.34,2));
-      const hole=Math.sqrt((rx/.185)**2+(ry/.115)**2);
-      const behindHole=hole<1.02 && Math.abs(ry)<.13;
-      const stream=Math.max(0,1-Math.abs(ry-(.12*rx+.05))/.045);
-      const field=rand(x+y*cols+91);
-      const upperFog=Math.max(0,1-Math.abs(rx)/.78)*Math.max(0,(ny-.03));
-      // Keep more glyphs on and around the disk, sparse on the far left.
-      let density=.035+broadHalo*.30+nearDisk*.72+stream*.18+upperFog*.10;
-      if(nx<.32) density*=.18;
-      if(behindHole) density*=.03;
-      if(field<density) points.push({x,y,nx,ny,rx,ry,dist,nearDisk,broadHalo,stream,field,seed:rand(x*7+y*13+3)});
-    }
+ const canvas=document.getElementById('hole'),ctx=canvas.getContext('2d',{alpha:true});
+ if(!ctx)return;
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const glyphs='01{}[]<>/\\|:;+=-*░▒▓·';
+ let w=0,h=0,dpr=1,raf=0,last=0,time=0,cell=11,points=[];
+ const random=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+ function resize(){
+  dpr=Math.min(window.devicePixelRatio||1,1.5);w=canvas.clientWidth;h=canvas.clientHeight;
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+  cell=w<700?10:11;points=[];
+  const cw=cell*.78,ch=cell*1.08,cols=Math.ceil(w/cw),rows=Math.ceil(h/ch);
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+   const px=x*cw,py=y*ch,nx=px/w,ny=py/h;
+   // Elliptical tilted disk, with a larger, clearly readable void at its center.
+   const dx=(nx-.755),dy=(ny-.515),a=-.16;
+   const rx=dx*Math.cos(a)-dy*Math.sin(a),ry=dx*Math.sin(a)+dy*Math.cos(a);
+   const r=Math.sqrt((rx/.29)**2+(ry/.125)**2);
+   const inner=Math.sqrt((rx/.105)**2+(ry/.064)**2);
+   const ring=Math.exp(-Math.pow((r-1)/.14,2));
+   const outer=Math.exp(-Math.pow((r-1.18)/.22,2));
+   const streak=Math.exp(-Math.pow((ry-(.16*rx+.012))/.026,2))*Math.exp(-Math.pow((rx+.03)/.48,2));
+   const texture=random(x+y*cols+17);
+   // Glyphs stay concentrated around the accretion flow; no random full-width bands.
+   let chance=.012+ring*.84+outer*.15+streak*.20;
+   if(inner<1.08)chance*=.008;
+   if(nx<.38)chance*=.10;
+   if(ny<.12||ny>.88)chance*=.38;
+   if(texture<chance)points.push({px,py,nx,ny,rx,ry,r,inner,ring,outer,streak,seed:random(x*7+y*13+5),texture});
   }
-  function draw(t){
-    const dt=last?Math.min((t-last)/1000,.04):0; last=t;
-    if(!reduced) phase+=dt*.22;
-    ctx.clearRect(0,0,w,h);
-    // Luminous mist behind the glyphs.
-    const cx=w*.78, cy=h*.53;
-    const halo=ctx.createRadialGradient(cx,cy,2,cx,cy,Math.min(w*.55,h*.7));
-    halo.addColorStop(0,'rgba(0,173,230,.045)');halo.addColorStop(.55,'rgba(0,91,151,.025)');halo.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=halo;ctx.fillRect(0,0,w,h);
-    ctx.font=font+'px Consolas, "Courier New", monospace';
-    ctx.textBaseline='top';
-    for(const p of points){
-      const shimmer=.72+.28*Math.sin(phase*1.4+p.seed*13);
-      let alpha=(.12+p.broadHalo*.26+p.nearDisk*.72+p.stream*.15)*shimmer;
-      const dx=p.nx-.78,dy=p.ny-.53;
-      // Hot inner sweep, running diagonally through the lower-left edge of the ring.
-      const hot=Math.exp(-Math.pow((p.ry-(.12*p.rx+.025))/.032,2))*Math.exp(-Math.pow((p.rx+.08)/.56,2));
-      alpha=Math.min(.98,alpha+hot*.5);
-      if(p.nx<.35) alpha*=.25;
-      if(p.dist<.88) alpha*=.018;
-      if(p.dist>1.48) alpha*=.32;
-      if(alpha<.055) continue;
-      const hue=(p.nearDisk>.45||hot>.35) ? 190 : 195;
-      const light= Math.min(94,55+hot*37+p.nearDisk*24);
-      ctx.fillStyle='hsla('+hue+',100%,'+light+'%,'+alpha+')';
-      const index=Math.floor((p.seed*chars.length+phase*2.5)%chars.length);
-      const glyph=chars[(index+chars.length)%chars.length];
-      ctx.fillText(glyph,p.x*cw,p.y*ch);
-    }
-    // A clean, nearly black event horizon; its dotted rim is intentionally restrained.
-    ctx.save();
-    ctx.translate(w*.78,h*.53);ctx.rotate(-.135);ctx.scale(1,.61);
-    const r=Math.min(w*.105,h*.22);
-    const dark=ctx.createRadialGradient(0,0,r*.68,0,0,r*1.06);
-    dark.addColorStop(0,'rgba(1,5,13,1)');dark.addColorStop(.78,'rgba(1,5,13,1)');dark.addColorStop(1,'rgba(1,7,16,.88)');
-    ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fillStyle=dark;ctx.fill();
-    ctx.setLineDash([1.2,5.4]);ctx.lineWidth=1.3;ctx.strokeStyle='rgba(224,248,255,.82)';
-    ctx.beginPath();ctx.arc(0,0,r*1.02,0,Math.PI*2);ctx.stroke();ctx.restore();
-    // A pair of thin streaks make the disk feel swept toward the lower-left.
-    ctx.save();ctx.globalCompositeOperation='screen';
-    for(let i=0;i<3;i++){
-      const yy=h*(.69+i*.018);
-      const g=ctx.createLinearGradient(w*.18,yy,w*.83,yy-h*.23);
-      g.addColorStop(0,'rgba(0,190,255,0)');g.addColorStop(.42,'rgba(0,200,245,'+(0.055-i*.012)+')');g.addColorStop(.72,'rgba(220,250,255,.15)');g.addColorStop(1,'rgba(0,190,255,0)');
-      ctx.strokeStyle=g;ctx.lineWidth=i===1?1.2:.7;ctx.beginPath();ctx.moveTo(w*.18,yy);ctx.quadraticCurveTo(w*.52,yy-h*.11,w*.83,yy-h*.23);ctx.stroke();
-    }
-    ctx.restore();
-    if(!reduced) raf=requestAnimationFrame(draw);
+ }
+ function draw(t){
+  const dt=last?Math.min((t-last)/1000,.04):0;last=t;if(!reduced)time+=dt;
+  ctx.clearRect(0,0,w,h);
+  const cx=w*.755,cy=h*.515;
+  const mist=ctx.createRadialGradient(cx,cy,2,cx,cy,Math.min(w*.49,h*.65));
+  mist.addColorStop(0,'rgba(0,153,219,.075)');mist.addColorStop(.38,'rgba(0,92,158,.045)');mist.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=mist;ctx.fillRect(0,0,w,h);
+  const cw=cell*.78,ch=cell*1.08;ctx.font=cell+'px Consolas,"Courier New",monospace';ctx.textBaseline='top';
+  // Gentle, curved luminous trails establish the disk before the glyphs are drawn.
+  ctx.save();ctx.globalCompositeOperation='screen';
+  for(let i=0;i<8;i++){
+   const offset=(i-3.5)*cell*1.05;
+   const x1=w*.37,y1=h*.63+offset*.48,x2=w*.91,y2=h*.40+offset*.34;
+   const g=ctx.createLinearGradient(x1,y1,x2,y2);
+   const alpha=.035+(i%3)*.012;
+   g.addColorStop(0,'rgba(0,190,255,0)');g.addColorStop(.32,'rgba(0,190,255,'+alpha+')');g.addColorStop(.68,'rgba(132,226,255,'+(alpha*2.3)+')');g.addColorStop(1,'rgba(0,190,255,0)');
+   ctx.strokeStyle=g;ctx.lineWidth=i===3?1.3:.7;ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(w*.54,y1-h*.10,w*.69,y2+h*.10,x2,y2);ctx.stroke();
   }
-  function start(){cancelAnimationFrame(raf);last=0;if(reduced){draw(0)}else raf=requestAnimationFrame(draw)}
-  const ro=new ResizeObserver(()=>{resize();start()});
-  ro.observe(canvas);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else start()});
-  resize();start();
+  ctx.restore();
+  for(const p of points){
+   const shimmer=.83+.17*Math.sin(time*1.15+p.seed*12);
+   let alpha=(.13+p.outer*.18+p.ring*.68+p.streak*.2)*shimmer;
+   if(p.inner<1.04)alpha*=.012;
+   if(p.r>1.48)alpha*=.22;
+   if(p.nx<.38)alpha*=.45;
+   if(alpha<.055)continue;
+   const hot=Math.min(1,p.ring*.7+p.streak*.9);
+   ctx.fillStyle=hot>.48?'rgba(204,247,255,'+Math.min(.95,alpha+hot*.23)+')':'rgba(30,174,222,'+alpha+')';
+   const i=Math.floor((p.seed*glyphs.length+time*1.3)%glyphs.length);
+   ctx.fillText(glyphs[(i+glyphs.length)%glyphs.length],p.px,p.py);
+  }
+  // Large, clean event horizon with a restrained luminous rim.
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(-.16);ctx.scale(1,.52);
+  const radius=Math.min(w*.145,h*.28);
+  const shadow=ctx.createRadialGradient(0,0,radius*.72,0,0,radius*1.12);
+  shadow.addColorStop(0,'#01040b');shadow.addColorStop(.82,'#01040b');shadow.addColorStop(.96,'rgba(1,7,16,.98)');shadow.addColorStop(1,'rgba(0,200,245,.15)');
+  ctx.beginPath();ctx.arc(0,0,radius,0,Math.PI*2);ctx.fillStyle=shadow;ctx.fill();
+  ctx.setLineDash([1.1,5.5]);ctx.lineWidth=1.35;ctx.strokeStyle='rgba(193,240,255,.72)';ctx.beginPath();ctx.arc(0,0,radius*1.015,0,Math.PI*2);ctx.stroke();ctx.restore();
+  if(!reduced)raf=requestAnimationFrame(draw);
+ }
+ function start(){cancelAnimationFrame(raf);last=0;if(reduced)draw(0);else raf=requestAnimationFrame(draw)}
+ const ro=new ResizeObserver(()=>{resize();start()});ro.observe(canvas);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else start()});
+ resize();start();
 })();
 </script>
 </body>
