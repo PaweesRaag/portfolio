@@ -108,6 +108,48 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   background-repeat:no-repeat!important;
   opacity:.96!important;
 }
+
+/* EXPERIMENT 01 — Enter the Grid: the hero dissolves into the corridor as the page scrolls. */
+#bhv{
+  opacity:calc(1 - var(--hero-exit, 0) * .96);
+  scale:calc(1 + var(--hero-exit, 0) * .13);
+  transition:opacity .08s linear;
+  will-change:opacity,scale;
+}
+#hero .shade{
+  opacity:calc(1 - var(--hero-exit, 0) * .92);
+}
+#hero .hero-txt{
+  transform:translate3d(0,calc(var(--hero-exit, 0) * -105px),0);
+  opacity:calc(1 - var(--hero-exit, 0) * 1.12);
+  filter:blur(calc(var(--hero-exit, 0) * 5px));
+  will-change:transform,opacity,filter;
+}
+#hero .cue{
+  transform:translate3d(0,calc(var(--hero-exit, 0) * -35px),0);
+  opacity:calc(1 - var(--hero-exit, 0) * 1.2);
+}
+#scene{
+  filter:brightness(calc(.88 + var(--hero-exit, 0) * .25)) saturate(calc(.92 + var(--hero-exit, 0) * .15));
+}
+#about h2{
+  transform-origin:left center;
+  transform:translate3d(0,38px,0) scale(.84);
+  opacity:.12;
+  filter:blur(5px);
+  transition:transform .9s cubic-bezier(.2,.75,.2,1),opacity .75s ease,filter .8s ease;
+}
+#about.focus h2{
+  transform:translate3d(0,0,0) scale(1);
+  opacity:1;
+  filter:blur(0);
+}
+@media(prefers-reduced-motion:reduce){
+  #bhv{opacity:1;scale:1;transition:none}
+  #hero .shade,#hero .hero-txt,#hero .cue{opacity:1;transform:none;filter:none}
+  #scene{filter:none}
+  #about h2{transform:none;opacity:1;filter:none;transition:none}
+}
 </style>
 </head>
 <body>
@@ -167,6 +209,22 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll("section").forEach(s=>io.observe(s));
 let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFrame(()=>{tick=0;nav.classList.toggle("on",scrollY>40)})},{passive:true});
 (function(){const bg=$("#bhv");if(!bg)return;if(reduce)bg.style.animation="none";bg.addEventListener("error",()=>{bg.style.display="none"},true)})();
+
+/* Scroll-linked progress for the hero-to-corridor transition. */
+(function(){
+  const hero=document.querySelector("#hero");
+  if(!hero || matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  let raf=0;
+  function update(){
+    raf=0;
+    const distance=Math.max(1,hero.offsetHeight*.78);
+    const p=Math.max(0,Math.min(1,window.scrollY/distance));
+    document.documentElement.style.setProperty("--hero-exit",p.toFixed(4));
+  }
+  addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(update)},{passive:true});
+  addEventListener("resize",update,{passive:true});
+  update();
+})();
 </script>
 </body>
 </html>
