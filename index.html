@@ -163,11 +163,12 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   background:linear-gradient(to bottom,transparent,rgba(0,191,255,.12),transparent);
 }
 #hero:after{
-  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:calc(var(--hero-exit,0) * .48);
-  background-image:radial-gradient(circle,rgba(119,222,255,.92) 0 1px,transparent 1.7px);
-  background-size:9px 9px;
-  mask-image:linear-gradient(90deg,rgba(0,0,0,.75),transparent 78%);
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:var(--dissolve,0);
+  background-image:radial-gradient(circle,rgba(119,222,255,.98) 0 1.15px,transparent 1.9px);
+  background-size:7px 7px;
+  mask-image:radial-gradient(ellipse at 35% 48%,black 0%,rgba(0,0,0,.88) 25%,rgba(0,0,0,.35) 60%,transparent 88%);
   mix-blend-mode:screen;
+  transition:opacity .06s linear;
 }
 #about .wrap{position:relative}
 #about .wrap:before{
@@ -239,16 +240,29 @@ document.querySelectorAll("section").forEach(s=>io.observe(s));
 let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFrame(()=>{tick=0;nav.classList.toggle("on",scrollY>40)})},{passive:true});
 (function(){const bg=$("#bhv");if(!bg)return;if(reduce)bg.style.animation="none";bg.addEventListener("error",()=>{bg.style.display="none"},true)})();
 
-/* Scroll-linked progress for the hero-to-corridor transition. */
+/* Scroll-linked hero transition. Inline numeric styles avoid unsupported CSS calc multiplication. */
 (function(){
   const hero=document.querySelector("#hero");
+  const bg=document.querySelector("#bhv");
+  const shade=hero&&hero.querySelector(".shade");
+  const title=hero&&hero.querySelector(".hero-txt");
+  const cue=hero&&hero.querySelector(".cue");
+  const particles=document.querySelector("#hero");
+  const scene=document.querySelector("#scene");
+  const aboutTitle=document.querySelector("#about h2");
   if(!hero || matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   let raf=0;
   function update(){
     raf=0;
-    const distance=Math.max(1,hero.offsetHeight*.78);
-    const p=Math.max(0,Math.min(1,window.scrollY/distance));
+    const p=Math.max(0,Math.min(1,window.scrollY/Math.max(1,hero.offsetHeight*.78)));
     document.documentElement.style.setProperty("--hero-exit",p.toFixed(4));
+    if(bg){bg.style.opacity=String(1-p*.96);bg.style.scale=String(1+p*.13)}
+    if(shade)shade.style.opacity=String(1-p*.92);
+    if(title){title.style.transform="translate3d(0,"+(-p*105)+"px,0)";title.style.opacity=String(Math.max(0,1-p*1.12));title.style.filter="blur("+(p*5)+"px)"}
+    if(cue){cue.style.transform="translate3d(0,"+(-p*35)+"px,0)";cue.style.opacity=String(Math.max(0,1-p*1.2))}
+    if(scene){scene.style.filter="brightness("+(0.88+p*.25)+") saturate("+(0.92+p*.15)+")"}
+    if(aboutTitle){aboutTitle.style.transform="translate3d(0,"+((1-p)*38)+"px,0) scale("+(0.84+p*.16)+")";aboutTitle.style.opacity=String(.12+p*.88);aboutTitle.style.filter="blur("+((1-p)*5)+"px)"}
+    if(particles)particles.style.setProperty("--dissolve",String(p));
   }
   addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(update)},{passive:true});
   addEventListener("resize",update,{passive:true});
