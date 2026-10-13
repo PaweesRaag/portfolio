@@ -150,6 +150,35 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #scene{filter:none}
   #about h2{transform:none;opacity:1;filter:none;transition:none}
 }
+
+/* EXPERIMENT 02 — System Scan: a cyan scanline decodes the next section. */
+#system-scan{
+  position:fixed;left:0;top:0;width:100%;height:2px;z-index:80;pointer-events:none;
+  opacity:0;transform:translate3d(0,0,0);
+  background:linear-gradient(90deg,transparent 0%,rgba(0,191,255,.35) 12%,#e9fbff 48%,#00bfff 58%,rgba(0,191,255,.4) 86%,transparent 100%);
+  box-shadow:0 0 8px rgba(0,191,255,.95),0 0 24px rgba(0,191,255,.6),0 0 65px rgba(0,191,255,.24);
+}
+#system-scan:after{
+  content:"";position:absolute;left:0;right:0;top:-14px;height:30px;
+  background:linear-gradient(to bottom,transparent,rgba(0,191,255,.12),transparent);
+}
+#hero:after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:calc(var(--hero-exit,0) * .48);
+  background-image:radial-gradient(circle,rgba(119,222,255,.92) 0 1px,transparent 1.7px);
+  background-size:9px 9px;
+  mask-image:linear-gradient(90deg,rgba(0,0,0,.75),transparent 78%);
+  mix-blend-mode:screen;
+}
+#about .wrap{position:relative}
+#about .wrap:before{
+  content:"";position:absolute;left:0;top:0;width:min(100%,760px);height:1px;
+  background:linear-gradient(90deg,transparent,#00bfff,rgba(232,249,255,.9),transparent);
+  transform:scaleX(var(--hero-exit,0));transform-origin:left center;opacity:.7;
+}
+@media(prefers-reduced-motion:reduce){
+  #system-scan{display:none}
+  #hero:after,#about .wrap:before{display:none}
+}
 </style>
 </head>
 <body>
@@ -224,6 +253,25 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(update)},{passive:true});
   addEventListener("resize",update,{passive:true});
   update();
+})();
+
+/* Scanline follows the scroll-linked transition and fades at either end. */
+(function(){
+  const scan=document.createElement("div");
+  scan.id="system-scan";
+  scan.setAttribute("aria-hidden","true");
+  document.body.appendChild(scan);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  let raf=0;
+  function updateScan(){
+    raf=0;
+    const p=Math.max(0,Math.min(1,window.scrollY/Math.max(1,document.querySelector("#hero").offsetHeight*.78)));
+    scan.style.transform="translate3d(0,"+(p*window.innerHeight)+"px,0)";
+    scan.style.opacity=(Math.sin(p*Math.PI)*.95).toFixed(3);
+  }
+  addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(updateScan)},{passive:true});
+  addEventListener("resize",updateScan,{passive:true});
+  updateScan();
 })();
 </script>
 </body>
