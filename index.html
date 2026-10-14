@@ -166,10 +166,15 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #data-stream-canvas{display:none}
   #about .wrap:before{display:none}
 }
+
+/* Cursor-following holographic grid */
+#cursor-grid-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;opacity:0;mix-blend-mode:screen;transition:opacity .35s}
+@media(hover:hover) and (pointer:fine){body.cursor-grid-active #cursor-grid-canvas{opacity:1}}
+@media(hover:none),(prefers-reduced-motion:reduce){#cursor-grid-canvas{display:none}}
 </style>
 </head>
 <body>
-<div id="scene" aria-hidden="true"></div><div id="grid" aria-hidden="true"></div>
+<div id="scene" aria-hidden="true"></div><div id="grid" aria-hidden="true"></div><canvas id="cursor-grid-canvas" aria-hidden="true"></canvas>
 <nav id="nav" aria-label="Primary">
 <a class="mark" href="#hero" aria-label="Sohom Chandra — top">SC</a>
 <button id="burger" aria-expanded="false" aria-controls="menu">MENU</button>
@@ -386,5 +391,87 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   schedule();
 })();
 </script>
-</body>
+
+<script>
+/* A restrained cyan grid that follows the pointer with a soft, delayed wake. */
+(function(){
+  const canvas=document.getElementById("cursor-grid-canvas");
+  if(!canvas||matchMedia("(hover: none), (prefers-reduced-motion: reduce)").matches)return;
+  const ctx=canvas.getContext("2d",{alpha:true});
+  if(!ctx)return;
+  let w=0,h=0,dpr=1,raf=0,active=false;
+  let x=-500,y=-500,tx=-500,ty=-500,px=-500,py=-500;
+  const trail=[];
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,1.6);
+    w=innerWidth;h=innerHeight;
+    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+    canvas.style.width=w+"px";canvas.style.height=h+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function pointer(e){
+    tx=e.clientX;ty=e.clientY;active=true;
+    document.body.classList.add("cursor-grid-active");
+    if(x<0){x=tx;y=ty;px=tx;py=ty}
+    if(!raf)raf=requestAnimationFrame(draw);
+  }
+  function leave(){active=false;if(!raf)raf=requestAnimationFrame(draw)}
+  function draw(){
+    raf=0;ctx.clearRect(0,0,w,h);
+    x+=(tx-x)*.19;y+=(ty-y)*.19;
+    const dx=x-px,dy=y-py;
+    if(active&&(Math.abs(dx)+Math.abs(dy)>1.2)){
+      trail.unshift({x,y,life:1});
+      if(trail.length>14)trail.pop();
+    }
+    trail.forEach(p=>p.life*=.91);
+    while(trail.length&&trail[trail.length-1].life<.045)trail.pop();
+    px=x;py=y;
+    const spacing=24,radius=245;
+    function drawPatch(cx,cy,strength,scale){
+      const r=radius*scale;
+      ctx.save();
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+      const glow=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.18)+")");
+      glow.addColorStop(.45,"rgba(0,191,255,"+(strength*.075)+")");
+      glow.addColorStop(1,"rgba(0,191,255,0)");
+      ctx.fillStyle=glow;ctx.fillRect(cx-r,cy-r,r*2,r*2);
+      ctx.lineWidth=1;
+      for(let gx=Math.floor((cx-r)/spacing)*spacing;gx<=cx+r;gx+=spacing){
+        const dist=Math.abs(gx-cx)/r;
+        ctx.strokeStyle="rgba(76,214,255,"+(strength*.20*(1-dist*.55))+")";
+        ctx.beginPath();ctx.moveTo(gx,cy-r);ctx.lineTo(gx,cy+r);ctx.stroke();
+      }
+      for(let gy=Math.floor((cy-r)/spacing)*spacing;gy<=cy+r;gy+=spacing){
+        const dist=Math.abs(gy-cy)/r;
+        ctx.strokeStyle="rgba(76,214,255,"+(strength*.20*(1-dist*.55))+")";
+        ctx.beginPath();ctx.moveTo(cx-r,gy);ctx.lineTo(cx+r,gy);ctx.stroke();
+      }
+      ctx.restore();
+      const core=ctx.createRadialGradient(cx,cy,0,cx,cy,44*scale);
+      core.addColorStop(0,"rgba(0,200,245,"+(strength*.20)+")");
+      core.addColorStop(1,"rgba(0,200,245,0)");
+      ctx.fillStyle=core;ctx.beginPath();ctx.arc(cx,cy,44*scale,0,Math.PI*2);ctx.fill();
+    }
+    if(x>-100&&active){
+      for(let i=trail.length-1;i>=0;i--){
+        const p=trail[i],age=1-i/Math.max(1,trail.length);
+        drawPatch(p.x,p.y,p.life*.30*(1-age*.45),.48);
+      }
+      drawPatch(x,y,1,1);
+      ctx.beginPath();ctx.arc(x,y,2.2,0,Math.PI*2);
+      ctx.fillStyle="rgba(220,250,255,.95)";ctx.shadowColor="#00BFFF";ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0;
+    }
+    if(active||trail.length)raf=requestAnimationFrame(draw);
+    else {ctx.clearRect(0,0,w,h);document.body.classList.remove("cursor-grid-active")}
+  }
+  addEventListener("pointermove",pointer,{passive:true});
+  addEventListener("pointerleave",leave,{passive:true});
+  addEventListener("blur",leave);
+  addEventListener("resize",resize,{passive:true});
+  resize();
+})();
+</script>
+\n</body>
 </html>
