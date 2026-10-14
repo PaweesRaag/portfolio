@@ -266,14 +266,16 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     snapping=true;
     target.scrollIntoView({behavior:"smooth",block:"start"});
     clearTimeout(unlockTimer);
-    unlockTimer=setTimeout(()=>{snapping=false},1050);
+    unlockTimer=setTimeout(()=>{snapping=false},1450);
   }
   function atHeroBoundary(){
-    return window.scrollY < hero.offsetHeight*.58;
+    /* Treat almost the entire hero as the snap zone, not just its upper 58%. */
+    return window.scrollY < Math.max(0,hero.offsetHeight-120);
   }
   function atAboutTop(){
     const top=about.getBoundingClientRect().top;
-    return top>=-90 && top<=140;
+    /* Allow for wheel momentum and variable viewport heights near the section boundary. */
+    return top>=-120 && top<=Math.max(180,window.innerHeight*.62);
   }
   addEventListener("wheel",e=>{
     if(snapping||e.ctrlKey)return;
