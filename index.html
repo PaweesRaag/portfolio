@@ -255,6 +255,46 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   update();
 })();
 
+/* Boundary snap: wheel/touch gestures move cleanly between Hero and About instead of lingering in the transition. */
+(function(){
+  const hero=document.querySelector("#hero");
+  const about=document.querySelector("#about");
+  if(!hero||!about||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  let snapping=false,unlockTimer=0,touchStartY=null;
+  function snapTo(target){
+    if(snapping)return;
+    snapping=true;
+    target.scrollIntoView({behavior:"smooth",block:"start"});
+    clearTimeout(unlockTimer);
+    unlockTimer=setTimeout(()=>{snapping=false},1050);
+  }
+  function atHeroBoundary(){
+    return window.scrollY < hero.offsetHeight*.58;
+  }
+  function atAboutTop(){
+    const top=about.getBoundingClientRect().top;
+    return top>=-90 && top<=140;
+  }
+  addEventListener("wheel",e=>{
+    if(snapping||e.ctrlKey)return;
+    if(e.deltaY>0&&atHeroBoundary()){
+      e.preventDefault();snapTo(about);
+    }else if(e.deltaY<0&&atAboutTop()){
+      e.preventDefault();snapTo(hero);
+    }
+  },{passive:false});
+  addEventListener("touchstart",e=>{
+    if(e.touches.length===1)touchStartY=e.touches[0].clientY;
+  },{passive:true});
+  addEventListener("touchend",e=>{
+    if(snapping||touchStartY===null||!e.changedTouches.length)return;
+    const delta=touchStartY-e.changedTouches[0].clientY;
+    touchStartY=null;
+    if(delta>45&&atHeroBoundary())snapTo(about);
+    else if(delta< -45&&atAboutTop())snapTo(hero);
+  },{passive:true});
+})(); 
+
 /* Data Stream transition: scroll-linked luminous particles fall from the hero into the next layer. */
 (function(){
   const hero=document.querySelector("#hero");
