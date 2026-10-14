@@ -433,14 +433,14 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
       ctx.save();
       ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
       const glow=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.035)+")");
-      glow.addColorStop(.45,"rgba(0,191,255,"+(strength*.075)+")");
+      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.018)+")");
+      glow.addColorStop(.45,"rgba(0,191,255,"+(strength*.035)+")");
       glow.addColorStop(1,"rgba(0,191,255,0)");
       ctx.fillStyle=glow;ctx.fillRect(cx-r,cy-r,r*2,r*2);
       ctx.lineWidth=1;
       for(let gx=Math.floor((cx-r)/spacing)*spacing;gx<=cx+r;gx+=spacing){
         const dist=Math.abs(gx-cx)/r;
-        ctx.strokeStyle="rgba(76,214,255,"+(strength*.34*(1-dist*.55))+")";
+        ctx.strokeStyle="rgba(76,214,255,"+(strength*.16*(1-dist*.55))+")";
         ctx.beginPath();ctx.moveTo(gx,cy-r);ctx.lineTo(gx,cy+r);ctx.stroke();
       }
       for(let gy=Math.floor((cy-r)/spacing)*spacing;gy<=cy+r;gy+=spacing){
@@ -461,7 +461,7 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
       }
       drawPatch(x,y,1,1);
       ctx.beginPath();ctx.arc(x,y,2.2,0,Math.PI*2);
-      ctx.fillStyle="rgba(220,250,255,.95)";ctx.shadowColor="#00BFFF";ctx.shadowBlur=5;ctx.fill();ctx.shadowBlur=0;
+      ctx.fillStyle="rgba(220,250,255,.95)";ctx.shadowColor="#00BFFF";ctx.shadowBlur=3;ctx.fill();ctx.shadowBlur=0;
     }
     if(active||trail.length)raf=requestAnimationFrame(draw);
     else {ctx.clearRect(0,0,w,h);document.body.classList.remove("cursor-grid-active")}
