@@ -422,25 +422,25 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     const dx=x-px,dy=y-py;
     if(active&&(Math.abs(dx)+Math.abs(dy)>1.2)){
       trail.unshift({x,y,life:1});
-      if(trail.length>14)trail.pop();
+      if(trail.length>10)trail.pop();
     }
-    trail.forEach(p=>p.life*=.91);
+    trail.forEach(p=>p.life*=.87);
     while(trail.length&&trail[trail.length-1].life<.045)trail.pop();
     px=x;py=y;
-    const spacing=24,radius=245;
+    const spacing=22,radius=205;
     function drawPatch(cx,cy,strength,scale){
       const r=radius*scale;
       ctx.save();
       ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
       const glow=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.18)+")");
+      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.035)+")");
       glow.addColorStop(.45,"rgba(0,191,255,"+(strength*.075)+")");
       glow.addColorStop(1,"rgba(0,191,255,0)");
       ctx.fillStyle=glow;ctx.fillRect(cx-r,cy-r,r*2,r*2);
       ctx.lineWidth=1;
       for(let gx=Math.floor((cx-r)/spacing)*spacing;gx<=cx+r;gx+=spacing){
         const dist=Math.abs(gx-cx)/r;
-        ctx.strokeStyle="rgba(76,214,255,"+(strength*.20*(1-dist*.55))+")";
+        ctx.strokeStyle="rgba(76,214,255,"+(strength*.34*(1-dist*.55))+")";
         ctx.beginPath();ctx.moveTo(gx,cy-r);ctx.lineTo(gx,cy+r);ctx.stroke();
       }
       for(let gy=Math.floor((cy-r)/spacing)*spacing;gy<=cy+r;gy+=spacing){
@@ -449,19 +449,19 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
         ctx.beginPath();ctx.moveTo(cx-r,gy);ctx.lineTo(cx+r,gy);ctx.stroke();
       }
       ctx.restore();
-      const core=ctx.createRadialGradient(cx,cy,0,cx,cy,44*scale);
-      core.addColorStop(0,"rgba(0,200,245,"+(strength*.20)+")");
+      const core=ctx.createRadialGradient(cx,cy,0,cx,cy,30*scale);
+      core.addColorStop(0,"rgba(0,200,245,"+(strength*.075)+")");
       core.addColorStop(1,"rgba(0,200,245,0)");
       ctx.fillStyle=core;ctx.beginPath();ctx.arc(cx,cy,44*scale,0,Math.PI*2);ctx.fill();
     }
     if(x>-100&&active){
       for(let i=trail.length-1;i>=0;i--){
         const p=trail[i],age=1-i/Math.max(1,trail.length);
-        drawPatch(p.x,p.y,p.life*.30*(1-age*.45),.48);
+        drawPatch(p.x,p.y,p.life*.22*(1-age*.45),.42);
       }
       drawPatch(x,y,1,1);
       ctx.beginPath();ctx.arc(x,y,2.2,0,Math.PI*2);
-      ctx.fillStyle="rgba(220,250,255,.95)";ctx.shadowColor="#00BFFF";ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0;
+      ctx.fillStyle="rgba(220,250,255,.95)";ctx.shadowColor="#00BFFF";ctx.shadowBlur=5;ctx.fill();ctx.shadowBlur=0;
     }
     if(active||trail.length)raf=requestAnimationFrame(draw);
     else {ctx.clearRect(0,0,w,h);document.body.classList.remove("cursor-grid-active")}
