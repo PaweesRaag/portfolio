@@ -256,6 +256,28 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #grid-warp-overlay{display:none!important}
 }
 
+
+/* BOOT SCREEN — lightweight loader while the cinematic hero GIF decodes. */
+#boot-screen{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;
+background:radial-gradient(ellipse at 50% 48%,rgba(0,191,255,.12),transparent 42%),#030712;
+color:var(--ice);font-family:var(--mono);transition:opacity .45s ease,visibility .45s ease}
+#boot-screen.done{opacity:0;visibility:hidden;pointer-events:none}
+#boot-screen .boot-inner{width:min(440px,calc(100% - 48px));text-align:left}
+#boot-screen .boot-kicker{color:var(--cy);font-size:.68rem;letter-spacing:.2em}
+#boot-screen .boot-title{font:800 clamp(2rem,8vw,3.5rem)/.95 var(--disp);letter-spacing:.04em;margin:16px 0 8px}
+#boot-screen .boot-title span{color:var(--cy);text-shadow:0 0 22px rgba(0,191,255,.7)}
+#boot-screen .boot-status{display:flex;justify-content:space-between;gap:12px;color:var(--mute);font-size:.65rem;letter-spacing:.1em;margin-top:24px}
+#boot-screen .boot-track{height:2px;background:rgba(0,191,255,.16);overflow:hidden;margin-top:10px}
+#boot-screen .boot-track:after{content:"";display:block;width:38%;height:100%;background:linear-gradient(90deg,transparent,var(--cy),var(--ice));box-shadow:0 0 14px var(--cy);animation:boot-scan 1.15s ease-in-out infinite}
+#boot-screen .boot-coords{margin-top:18px;color:#58758d;font-size:.58rem;letter-spacing:.12em}
+@keyframes boot-scan{from{transform:translateX(-110%)}to{transform:translateX(280%)}}
+#hero{background:radial-gradient(ellipse at 68% 45%,#0a2940 0%,#061322 34%,var(--void) 75%)}
+#hero.is-loading #bhv{opacity:0}
+#hero.is-revealing #bhv{opacity:1}
+@media(prefers-reduced-motion:reduce){
+ #boot-screen{transition:none}#boot-screen .boot-track:after{animation:none;width:100%}
+}
+
 </style>
 </head>
 <body>
@@ -560,29 +582,51 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
 </script>
 \n
 <script>
+/* Boot screen waits for the hero visual, then reveals it with the existing glitch language. */
 (function(){
   const hero=document.getElementById("hero");
   const image=document.getElementById("bhv");
   if(!hero||!image)return;
-  function loaded(){
-    if(hero.classList.contains("is-loaded")||hero.classList.contains("is-revealing"))return;
-    hero.classList.remove("is-loading");
-    hero.classList.add("is-revealing");
-    const finish=()=>{
-      hero.classList.remove("is-revealing");
+  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const boot=document.createElement("div");
+  boot.id="boot-screen";
+  boot.setAttribute("role","status");
+  boot.setAttribute("aria-live","polite");
+  boot.innerHTML='<div class="boot-inner"><div class="boot-kicker">PAWEESRAAG // SECURE CONNECTION</div><div class="boot-title">SYSTEM<span>_</span>BOOT</div><div class="boot-kicker">INITIALIZING VISUAL INTERFACE</div><div class="boot-status"><span id="boot-message">LOADING HERO FRAME DATA</span><span>PLEASE WAIT</span></div><div class="boot-track"></div><div class="boot-coords">0x00 // SIGNAL ACQUISITION // UNDER THE SURFACE</div></div>';
+  document.body.appendChild(boot);
+  let finished=false,timeoutId;
+  function finish(useFallback){
+    if(finished)return;
+    finished=true;clearTimeout(timeoutId);
+    if(useFallback){
+      image.style.display="none";
+      hero.classList.remove("is-loading","is-revealing");
       hero.classList.add("is-loaded");
-    };
-    image.addEventListener("animationend",function(e){
-      if(e.animationName==="glitch-dissolve")finish();
-    },{once:true});
-    setTimeout(finish,1650);
+    }else if(reduce){
+      hero.classList.remove("is-loading","is-revealing");
+      hero.classList.add("is-loaded");
+    }else{
+      hero.classList.remove("is-loading");
+      hero.classList.add("is-revealing");
+      let ended=false;
+      const done=()=>{if(ended)return;ended=true;hero.classList.remove("is-revealing");hero.classList.add("is-loaded")};
+      image.addEventListener("animationend",e=>{if(e.animationName==="glitch-dissolve")done()});
+      setTimeout(done,1550);
+    }
+    requestAnimationFrame(()=>requestAnimationFrame(()=>boot.classList.add("done")));
+    setTimeout(()=>boot.remove(),650);
   }
-  image.addEventListener("load",loaded,{once:true});
-  image.addEventListener("error",function(){
-    const status=hero.querySelector(".hero-txt");
-    if(status)status.setAttribute("data-image-error","true");
-  },{once:true});
-  if(image.complete&&image.naturalWidth>0)loaded();
+  image.addEventListener("load",()=>finish(false),{once:true});
+  image.addEventListener("error",()=>finish(true),{once:true});
+  timeoutId=setTimeout(()=>{
+    const msg=document.getElementById("boot-message");
+    if(msg)msg.textContent="FALLBACK VISUAL // CONTINUING";
+    finish(true);
+  },12000);
+  if(image.complete){
+    if(image.naturalWidth>0)finish(false);
+    else if(image.currentSrc)finish(true);
+  }
 })();
 </script>
 
