@@ -288,7 +288,7 @@ color:var(--ice);font-family:var(--mono);transition:opacity .45s ease,visibility
 <ul id="menu"><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
 </nav>
 <header id="hero" data-bright="1" class="is-loading">
-<img id="bhv" src="./Nine-Frame%20Black%20Hole%20Accretion%20Animation%20(0.25x).gif" alt="" aria-hidden="true">
+<img id="bhv" src="./blackhole.gif" alt="" aria-hidden="true">
 <div class="shade" aria-hidden="true"></div><div class="hero-txt"><div class="mono">// Personal Cybersecurity Portfolio</div><h1>PaweesRaag</h1><p class="tag">Under the<br>Surface<span class="cur" aria-hidden="true"></span></p><div class="rule"></div></div>
 <a class="cue mono" href="#about"><i></i>Scroll to explore</a>
 </header>
@@ -594,10 +594,10 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   boot.setAttribute("aria-live","polite");
   boot.innerHTML='<div class="boot-inner"><div class="boot-kicker">PAWEESRAAG // SECURE CONNECTION</div><div class="boot-title">SYSTEM<span>_</span>BOOT</div><div class="boot-kicker">INITIALIZING VISUAL INTERFACE</div><div class="boot-status"><span id="boot-message">LOADING HERO FRAME DATA</span><span>PLEASE WAIT</span></div><div class="boot-track"></div><div class="boot-coords">0x00 // SIGNAL ACQUISITION // UNDER THE SURFACE</div></div>';
   document.body.appendChild(boot);
-  let finished=false,timeoutId;
+  let finished=false;
   function finish(useFallback){
     if(finished)return;
-    finished=true;clearTimeout(timeoutId);
+    finished=true;
     if(useFallback){
       image.style.display="none";
       hero.classList.remove("is-loading","is-revealing");
@@ -618,11 +618,7 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   }
   image.addEventListener("load",()=>finish(false),{once:true});
   image.addEventListener("error",()=>finish(true),{once:true});
-  timeoutId=setTimeout(()=>{
-    const msg=document.getElementById("boot-message");
-    if(msg)msg.textContent="FALLBACK VISUAL // CONTINUING";
-    finish(true);
-  },12000);
+  // Keep the full-quality animation; do not replace it with a fallback just because it is large.
   if(image.complete){
     if(image.naturalWidth>0)finish(false);
     else if(image.currentSrc)finish(true);
