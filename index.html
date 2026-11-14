@@ -167,6 +167,20 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #about .wrap:before{display:none}
 }
 
+/* Minimal tracking reticle — keeps the native pointer visible. */
+#cursor-reticle{position:fixed;left:0;top:0;width:34px;height:34px;z-index:10001;pointer-events:none;opacity:0;transform:translate3d(-50%,-50%,0);transition:opacity .18s ease;mix-blend-mode:screen}
+#cursor-reticle.visible{opacity:.9}
+#cursor-reticle .arm{position:absolute;background:#eaf8ff;box-shadow:0 0 7px rgba(0,191,255,.75);transition:transform .2s ease,background .2s ease}
+#cursor-reticle .top,#cursor-reticle .bottom{width:1px;height:8px;left:50%;transform:translateX(-50%)}
+#cursor-reticle .top{top:0}.bottom{bottom:0}
+#cursor-reticle .left,#cursor-reticle .right{height:1px;width:8px;top:50%;transform:translateY(-50%)}
+#cursor-reticle .left{left:0}.right{right:0}
+#cursor-reticle .center{position:absolute;width:3px;height:3px;border:1px solid #00bfff;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 8px #00bfff}
+#cursor-reticle.locked{width:42px;height:42px}
+#cursor-reticle.locked .arm{background:#00bfff}
+#cursor-reticle.pulse{animation:reticle-pulse .32s ease-out}
+@keyframes reticle-pulse{0%{scale:.7;opacity:.35}55%{scale:1.5;opacity:1}100%{scale:1;opacity:.9}}
+@media(hover:none),(prefers-reduced-motion:reduce){#cursor-reticle{display:none}}
 /* Cursor-following holographic grid */
 #cursor-grid-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;opacity:0;mix-blend-mode:screen;transition:opacity .35s}
 @media(hover:hover) and (pointer:fine){body.cursor-grid-active #cursor-grid-canvas{opacity:1}}
@@ -476,6 +490,42 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
 </script>
 
 <script>
+/* Cursor reticle: smooth tracking, target lock and click pulse. Native cursor remains visible. */
+(function(){
+  if(matchMedia("(hover: none), (prefers-reduced-motion: reduce)").matches)return;
+  const reticle=document.createElement("div");
+  reticle.id="cursor-reticle";
+  reticle.setAttribute("aria-hidden","true");
+  reticle.innerHTML='<i class="arm top"></i><i class="arm right"></i><i class="arm bottom"></i><i class="arm left"></i><i class="center"></i>';
+  document.body.appendChild(reticle);
+  let x=-100,y=-100,tx=-100,ty=-100,raf=0;
+  const smoothing=.35;
+  function move(e){
+    tx=e.clientX;ty=e.clientY;
+    reticle.classList.add("visible");
+    if(!raf)raf=requestAnimationFrame(tick);
+  }
+  function tick(){
+    x+=(tx-x)*smoothing;y+=(ty-y)*smoothing;
+    reticle.style.transform="translate3d("+x+"px,"+y+"px,0) translate(-50%,-50%)";
+    if(Math.abs(tx-x)>.2||Math.abs(ty-y)>.2)raf=requestAnimationFrame(tick);
+    else raf=0;
+  }
+  function target(e){
+    reticle.classList.toggle("locked",!!e.target.closest("a,button,[role='button'],input,textarea,select"));
+  }
+  function pulse(){
+    reticle.classList.remove("pulse");
+    void reticle.offsetWidth;
+    reticle.classList.add("pulse");
+  }
+  function hide(){reticle.classList.remove("visible","locked")}
+  addEventListener("pointermove",move,{passive:true});
+  addEventListener("pointerover",target,{passive:true});
+  addEventListener("pointerdown",pulse,{passive:true});
+  addEventListener("pointerleave",hide,{passive:true});
+  addEventListener("blur",hide);
+})();
 /* A restrained cyan grid that follows the pointer with a soft, delayed wake. */
 (function(){
   const canvas=document.getElementById("cursor-grid-canvas");
