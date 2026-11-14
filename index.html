@@ -167,6 +167,16 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #about .wrap:before{display:none}
 }
 
+/* Full-viewport coordinate crosshair inspired by precision design rulers. */
+#cursor-guides{position:fixed;inset:0;z-index:10000;pointer-events:none;opacity:0;transition:opacity .16s ease;color:#eaf8ff;font:11px/1 var(--mono);letter-spacing:.04em}
+#cursor-guides.visible{opacity:.68}
+#cursor-guides .guide-x,#cursor-guides .guide-y{position:absolute;background:rgba(234,248,255,.62);box-shadow:0 0 5px rgba(0,191,255,.12)}
+#cursor-guides .guide-x{left:0;right:0;height:1px}
+#cursor-guides .guide-y{top:0;bottom:0;width:1px}
+#cursor-guides .guide-label{position:absolute;padding:5px 7px;border-radius:3px;background:rgba(234,248,255,.88);color:#10151d;min-width:30px;text-align:center;box-shadow:0 1px 5px rgba(0,0,0,.18)}
+#cursor-guides .guide-label-x{top:7px;transform:translateX(-50%)}
+#cursor-guides .guide-label-y{left:7px;transform:translateY(-50%)}
+@media(hover:none),(prefers-reduced-motion:reduce){#cursor-guides{display:none}}
 /* Minimal tracking reticle — keeps the native pointer visible. */
 #cursor-reticle{position:fixed;left:0;top:0;width:34px;height:34px;z-index:10001;pointer-events:none;opacity:0;transform:translate3d(-50%,-50%,0);transition:opacity .18s ease;mix-blend-mode:screen}
 #cursor-reticle.visible{opacity:.9}
@@ -490,6 +500,30 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
 </script>
 
 <script>
+/* Full-screen crosshair guides with live viewport coordinates. */
+(function(){
+  if(matchMedia("(hover: none), (prefers-reduced-motion: reduce)").matches)return;
+  const guides=document.createElement("div");
+  guides.id="cursor-guides";
+  guides.setAttribute("aria-hidden","true");
+  guides.innerHTML='<i class="guide-x"></i><i class="guide-y"></i><span class="guide-label guide-label-x"></span><span class="guide-label guide-label-y"></span>';
+  document.body.appendChild(guides);
+  const lineX=guides.querySelector(".guide-x"),lineY=guides.querySelector(".guide-y");
+  const labelX=guides.querySelector(".guide-label-x"),labelY=guides.querySelector(".guide-label-y");
+  function move(e){
+    lineX.style.top=e.clientY+"px";
+    lineY.style.left=e.clientX+"px";
+    labelX.style.left=e.clientX+"px";
+    labelY.style.top=e.clientY+"px";
+    labelX.textContent=Math.round(e.clientX);
+    labelY.textContent=Math.round(e.clientY);
+    guides.classList.add("visible");
+  }
+  function hide(){guides.classList.remove("visible")}
+  addEventListener("pointermove",move,{passive:true});
+  addEventListener("pointerleave",hide,{passive:true});
+  addEventListener("blur",hide);
+})();
 /* Cursor reticle: smooth tracking, target lock and click pulse. Native cursor remains visible. */
 (function(){
   if(matchMedia("(hover: none), (prefers-reduced-motion: reduce)").matches)return;
@@ -560,25 +594,25 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     trail.forEach(p=>p.life*=.87);
     while(trail.length&&trail[trail.length-1].life<.045)trail.pop();
     px=x;py=y;
-    const spacing=22,radius=205;
+    const spacing=22,radius=112;
     function drawPatch(cx,cy,strength,scale){
       const r=radius*scale;
       ctx.save();
       ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
       const glow=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.018)+")");
-      glow.addColorStop(.45,"rgba(0,191,255,"+(strength*.035)+")");
+      glow.addColorStop(0,"rgba(0,191,255,"+(strength*.009)+")");
+      glow.addColorStop(.45,"rgba(0,191,255,"+(strength*.018)+")");
       glow.addColorStop(1,"rgba(0,191,255,0)");
       ctx.fillStyle=glow;ctx.fillRect(cx-r,cy-r,r*2,r*2);
       ctx.lineWidth=1;
       for(let gx=Math.floor((cx-r)/spacing)*spacing;gx<=cx+r;gx+=spacing){
         const dist=Math.abs(gx-cx)/r;
-        ctx.strokeStyle="rgba(76,214,255,"+(strength*.16*(1-dist*.55))+")";
+        ctx.strokeStyle="rgba(76,214,255,"+(strength*.11*(1-dist*.55))+")";
         ctx.beginPath();ctx.moveTo(gx,cy-r);ctx.lineTo(gx,cy+r);ctx.stroke();
       }
       for(let gy=Math.floor((cy-r)/spacing)*spacing;gy<=cy+r;gy+=spacing){
         const dist=Math.abs(gy-cy)/r;
-        ctx.strokeStyle="rgba(76,214,255,"+(strength*.20*(1-dist*.55))+")";
+        ctx.strokeStyle="rgba(76,214,255,"+(strength*.13*(1-dist*.55))+")";
         ctx.beginPath();ctx.moveTo(cx-r,gy);ctx.lineTo(cx+r,gy);ctx.stroke();
       }
       ctx.restore();
