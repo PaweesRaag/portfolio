@@ -173,9 +173,6 @@ animation:energy-pulse 5.5s ease-in-out infinite}
 @media(hover:none),(prefers-reduced-motion:reduce){#cursor-grid-canvas{display:none}}
 
 /* Sideways glitch-dissolve reveal for the hero image */
-#hero.is-loading #bhv{opacity:.12;filter:brightness(.3) saturate(.5);clip-path:inset(0 100% 0 0);animation:none}
-#hero.is-loading .shade:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,191,255,.045) 4px,transparent 5px 8px);opacity:.45}
-#hero.is-loading .hero-txt:after{content:"SIGNAL BUFFERING  //  WAITING FOR FRAME DATA";display:block;margin-top:12px;font:500 .65rem/1.5 var(--mono);letter-spacing:.12em;color:var(--cy);opacity:.72}
 #hero.is-revealing #bhv{opacity:1;filter:brightness(.9) saturate(1);animation:glitch-dissolve 1.45s steps(1,end) both,drift 32s 1.45s ease-in-out infinite alternate}
 #hero.is-revealing .shade:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,191,255,.08) 4px,transparent 5px 8px);animation:reveal-scan 1.45s steps(1,end) both}
 #hero.is-revealing .hero-txt:after{content:"SIGNAL SYNCHRONIZING";display:block;margin-top:12px;font:500 .65rem/1.5 var(--mono);letter-spacing:.12em;color:var(--cy);animation:status-out .8s 0.35s ease forwards}
@@ -198,7 +195,7 @@ animation:energy-pulse 5.5s ease-in-out infinite}
 }
 @keyframes reveal-scan{0%,100%{opacity:0}12%,70%{opacity:.75}88%{opacity:.15}}
 @keyframes status-out{0%{opacity:.75}100%{opacity:0}}
-@media(prefers-reduced-motion:reduce){#hero.is-loading #bhv{clip-path:inset(0);opacity:.9}#hero.is-revealing #bhv{animation:none;clip-path:inset(0)}#hero.is-revealing .shade:after{animation:none}}
+@media(prefers-reduced-motion:reduce){#hero.is-revealing #bhv{animation:none;clip-path:inset(0)}#hero.is-revealing .shade:after{animation:none}}
 
 /* CINEMATIC GRID WARP — route-like transitions between the portfolio's sections. */
 #grid-warp-overlay{
@@ -257,27 +254,6 @@ animation:energy-pulse 5.5s ease-in-out infinite}
 }
 
 
-/* BOOT SCREEN — lightweight loader while the cinematic hero GIF decodes. */
-#boot-screen{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;
-background:radial-gradient(ellipse at 50% 48%,rgba(0,191,255,.12),transparent 42%),#030712;
-color:var(--ice);font-family:var(--mono);transition:opacity .45s ease,visibility .45s ease}
-#boot-screen.done{opacity:0;visibility:hidden;pointer-events:none}
-#boot-screen .boot-inner{width:min(440px,calc(100% - 48px));text-align:left}
-#boot-screen .boot-kicker{color:var(--cy);font-size:.68rem;letter-spacing:.2em}
-#boot-screen .boot-title{font:800 clamp(2rem,8vw,3.5rem)/.95 var(--disp);letter-spacing:.04em;margin:16px 0 8px}
-#boot-screen .boot-title span{color:var(--cy);text-shadow:0 0 22px rgba(0,191,255,.7)}
-#boot-screen .boot-status{display:flex;justify-content:space-between;gap:12px;color:var(--mute);font-size:.65rem;letter-spacing:.1em;margin-top:24px}
-#boot-screen .boot-track{height:2px;background:rgba(0,191,255,.16);overflow:hidden;margin-top:10px}
-#boot-screen .boot-track:after{content:"";display:block;width:38%;height:100%;background:linear-gradient(90deg,transparent,var(--cy),var(--ice));box-shadow:0 0 14px var(--cy);animation:boot-scan 1.15s ease-in-out infinite}
-#boot-screen .boot-coords{margin-top:18px;color:#58758d;font-size:.58rem;letter-spacing:.12em}
-@keyframes boot-scan{from{transform:translateX(-110%)}to{transform:translateX(280%)}}
-#hero{background:radial-gradient(ellipse at 68% 45%,#0a2940 0%,#061322 34%,var(--void) 75%)}
-#hero.is-loading #bhv{opacity:0}
-#hero.is-revealing #bhv{opacity:1}
-@media(prefers-reduced-motion:reduce){
- #boot-screen{transition:none}#boot-screen .boot-track:after{animation:none;width:100%}
-}
-
 </style>
 </head>
 <body>
@@ -287,7 +263,7 @@ color:var(--ice);font-family:var(--mono);transition:opacity .45s ease,visibility
 <button id="burger" aria-expanded="false" aria-controls="menu">MENU</button>
 <ul id="menu"><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
 </nav>
-<header id="hero" data-bright="1" class="is-loading">
+<header id="hero" data-bright="1" >
 <img id="bhv" src="./blackhole.gif" alt="" aria-hidden="true">
 <div class="shade" aria-hidden="true"></div><div class="hero-txt"><div class="mono">// Personal Cybersecurity Portfolio</div><h1>PaweesRaag</h1><p class="tag">Under the<br>Surface<span class="cur" aria-hidden="true"></span></p><div class="rule"></div></div>
 <a class="cue mono" href="#about"><i></i>Scroll to explore</a>
@@ -582,47 +558,25 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
 </script>
 \n
 <script>
-/* Boot screen waits for the hero visual, then reveals it with the existing glitch language. */
+/* Reveal the full-quality hero GIF as soon as its image data is available. */
 (function(){
   const hero=document.getElementById("hero");
   const image=document.getElementById("bhv");
   if(!hero||!image)return;
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const boot=document.createElement("div");
-  boot.id="boot-screen";
-  boot.setAttribute("role","status");
-  boot.setAttribute("aria-live","polite");
-  boot.innerHTML='<div class="boot-inner"><div class="boot-kicker">PAWEESRAAG // SECURE CONNECTION</div><div class="boot-title">SYSTEM<span>_</span>BOOT</div><div class="boot-kicker">INITIALIZING VISUAL INTERFACE</div><div class="boot-status"><span id="boot-message">LOADING HERO FRAME DATA</span><span>PLEASE WAIT</span></div><div class="boot-track"></div><div class="boot-coords">0x00 // SIGNAL ACQUISITION // UNDER THE SURFACE</div></div>';
-  document.body.appendChild(boot);
-  let finished=false;
-  function finish(useFallback){
-    if(finished)return;
-    finished=true;
-    if(useFallback){
-      image.style.display="none";
-      hero.classList.remove("is-loading","is-revealing");
-      hero.classList.add("is-loaded");
-    }else if(reduce){
-      hero.classList.remove("is-loading","is-revealing");
-      hero.classList.add("is-loaded");
-    }else{
-      hero.classList.remove("is-loading");
-      hero.classList.add("is-revealing");
-      let ended=false;
-      const done=()=>{if(ended)return;ended=true;hero.classList.remove("is-revealing");hero.classList.add("is-loaded")};
-      image.addEventListener("animationend",e=>{if(e.animationName==="glitch-dissolve")done()});
-      setTimeout(done,1550);
-    }
-    requestAnimationFrame(()=>requestAnimationFrame(()=>boot.classList.add("done")));
-    setTimeout(()=>boot.remove(),650);
+  let started=false;
+  function reveal(){
+    if(started)return;
+    started=true;
+    if(reduce){hero.classList.add("is-loaded");return}
+    hero.classList.add("is-revealing");
+    const finish=()=>{hero.classList.remove("is-revealing");hero.classList.add("is-loaded")};
+    image.addEventListener("animationend",e=>{if(e.animationName==="glitch-dissolve")finish()},{once:true});
+    window.setTimeout(finish,1550);
   }
-  image.addEventListener("load",()=>finish(false),{once:true});
-  image.addEventListener("error",()=>finish(true),{once:true});
-  // Keep the full-quality animation; do not replace it with a fallback just because it is large.
-  if(image.complete){
-    if(image.naturalWidth>0)finish(false);
-    else if(image.currentSrc)finish(true);
-  }
+  image.addEventListener("load",reveal,{once:true});
+  image.addEventListener("error",()=>{image.style.display="none"},{once:true});
+  if(image.complete&&image.naturalWidth>0)reveal();
 })();
 </script>
 
