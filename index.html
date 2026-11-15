@@ -278,6 +278,66 @@ animation:energy-pulse 5.5s ease-in-out infinite}
 }
 
 
+
+/* ===== NEO-TOKYO 2099 layer (appended; crosshair, Grid Warp and hero GIF untouched) ===== */
+:root{--void:#050609;--navy:#101B3A;--mg:#FF2DAA;--hz:#FF3B75;--ease:cubic-bezier(.23,1,.32,1)}
+body{background:#050609}
+a,button{transition:color .16s var(--ease),border-color .16s var(--ease),background .16s var(--ease),transform .16s var(--ease)}
+a:active,button:active{transform:scale(.97)}
+.shade:before,.shade:after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen}
+.shade:before{background:radial-gradient(60% 50% at 12% 95%,rgba(0,191,255,.12),transparent 70%)}
+.shade:after{background:radial-gradient(45% 40% at 92% 6%,rgba(255,45,170,.10),transparent 70%)}
+.wrap>.mono:first-child{color:var(--mg)}
+main:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.05;background:repeating-linear-gradient(104deg,transparent 0 22px,#9fdcff 22px 23px,transparent 23px 61px);background-size:120px 240px;animation:rain 1.6s linear infinite}
+@keyframes rain{to{background-position:-30px 240px}}
+section:after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;pointer-events:none;background:linear-gradient(transparent,rgba(16,27,58,.45))}
+html.js .case,html.js .tl article,html.js .dossier>div,html.js .cap{opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:calc(var(--i,0)*70ms)}
+html.js section.in .case,html.js section.in .tl article,html.js section.in .dossier>div,html.js section.in .cap{opacity:1;transform:none}
+h2.gl{animation:glitch .24s steps(2) 1}
+@keyframes glitch{0%{text-shadow:3px 0 var(--mg),-3px 0 var(--cy);transform:translateX(-2px)}50%{text-shadow:-3px 0 var(--mg),3px 0 var(--cy);transform:translateX(2px)}100%{text-shadow:none;transform:none}}
+/* About: identity record */
+.dossier{border:1px solid rgba(234,248,255,.18);background:rgba(16,27,58,.35);padding:6px 20px;font:400 .82rem/1.5 var(--mono)}
+.dossier:before,.dossier:after{display:none}
+.dossier>div{display:grid;grid-template-columns:9.5em 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(234,248,255,.1);color:var(--ice)}
+.dossier>div:last-child{border:0}.dossier dt,.dossier .k{color:var(--mg);text-transform:uppercase;letter-spacing:.1em;font-size:.7rem}
+/* Projects: investigation files */
+.proj{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;border:0}
+.case{grid-column:span 6;border:1px solid rgba(234,248,255,.16);background:rgba(16,27,58,.3);padding:24px;border-left:3px solid var(--c,var(--cy));position:relative}
+.case:nth-child(1){grid-column:1/-1;--c:var(--cy);display:grid;grid-template-columns:1fr 1.2fr;gap:8px 32px}
+.case:nth-child(2){--c:var(--mg);margin-top:28px}.case:nth-child(3){--c:var(--hz)}
+.case h3{margin:.3rem 0 .6rem;font:700 clamp(1.6rem,3vw,2.6rem)/1.05 var(--disp);text-transform:uppercase}
+.case .id{font:500 .72rem var(--mono);letter-spacing:.12em;color:var(--c)}
+.case dl{margin:0;display:grid;gap:10px}.case dt{font:500 .68rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}.case dd{margin:0;color:#CFE3F1}
+.case .tags,.case .links{grid-column:1/-1}
+.case:hover{border-color:rgba(234,248,255,.4);transform:translateY(-2px)}
+@media(max-width:800px){.case,.case:nth-child(n){grid-column:1/-1;display:block;margin-top:0}}
+/* Experience */
+.tl{border-left:1px solid rgba(255,45,170,.5)}.tl article:before{border-color:var(--mg);box-shadow:0 0 10px rgba(255,45,170,.7)}
+.opid{font:500 .72rem var(--mono);letter-spacing:.12em;color:var(--mg)}
+/* Skills: capability map */
+.capmap{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+.capmap svg{width:100%;height:auto;overflow:visible}
+.capmap .e{stroke:rgba(0,191,255,.45);stroke-width:1}.capmap .x{stroke:rgba(234,248,255,.12);stroke-width:1}
+.capmap .e{stroke-dasharray:4 6;animation:flow 3s linear infinite}@keyframes flow{to{stroke-dashoffset:-20}}
+.capmap .n{fill:#050609;stroke:var(--cy);stroke-width:1.5}.capmap .hub{fill:#050609;stroke:var(--mg);stroke-width:1.5}
+.capmap text{font:500 13px var(--mono);fill:var(--ice);text-anchor:middle}.capmap .lb{fill:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.caps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.cap{display:grid;grid-template-columns:2.4em 1fr;gap:4px 10px;padding:14px 0;border-bottom:1px solid rgba(234,248,255,.12)}
+.cap b{font:500 .8rem var(--mono);color:var(--cy)}.cap span{color:var(--ice)}.cap small{grid-column:2;color:var(--mute);font:400 .74rem var(--mono)}
+@media(max-width:800px){.capmap{grid-template-columns:1fr}.capmap .lb{display:none}}
+/* Responsive map labels and controlled Neo-Tokyo contrast. */
+.capmap{min-width:0}.capmap svg{max-height:430px}
+.capmap .lb{font-size:10px;paint-order:stroke;stroke:#050609;stroke-width:3px;stroke-linejoin:round}
+.case{background:linear-gradient(145deg,rgba(16,27,58,.48),rgba(5,6,9,.72));box-shadow:inset 0 1px rgba(234,248,255,.05)}
+.case:nth-child(2){background:linear-gradient(145deg,rgba(255,45,170,.07),rgba(16,27,58,.25))}
+.case:nth-child(3){background:linear-gradient(145deg,rgba(0,191,255,.07),rgba(16,27,58,.25))}
+@media(max-width:560px){.dossier>div{grid-template-columns:1fr;gap:4px}.case{padding:20px}.capmap{overflow:hidden}}
+/* Contact: open channel */
+.pwrap{display:none}.contact{grid-template-columns:1fr}
+.clist li{padding:0;border:0}.clist a,.clist .ph{display:flex;justify-content:space-between;gap:16px;width:100%;padding:18px 20px;border:1px solid rgba(234,248,255,.2);font:500 1rem var(--mono);color:var(--ice);text-decoration:none;min-height:56px;align-items:center}
+.clist a:hover{border-color:var(--mg);color:var(--ice);background:rgba(255,45,170,.08)}.clist a:after{content:"→";color:var(--mg)}
+.clist li{display:block;margin-bottom:10px}.clist .mono{display:block;margin-bottom:6px}
+@media(prefers-reduced-motion:reduce){main:before{animation:none}.capmap .e{animation:none}html.js .case,html.js .tl article,html.js .dossier>div,html.js .cap{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -293,14 +353,14 @@ animation:energy-pulse 5.5s ease-in-out infinite}
 <a class="cue mono" href="#about"><i></i>Scroll to explore</a>
 </header>
 <main>
-<section id="about"><div class="wrap"><div class="mono">// 01</div><h2 data-reveal>About</h2><div class="about"><p class="lead">I’m interested in what happens beneath the abstractions — how instructions execute, how operating systems manage processes and memory, and how software behaves when examined at a lower level. I use hands-on experiments and practical projects to deepen my understanding of systems and security.</p><div class="coord" id="facts"></div></div></div></section>
-<section id="projects"><div class="wrap"><div class="mono">// 02</div><h2 data-reveal>Projects</h2><div class="proj" id="projList"></div></div></section>
-<section id="experience"><div class="wrap"><div class="mono">// 03</div><h2 data-reveal>Experience</h2><div class="tl" id="expList"></div></div></section>
-<section id="skills"><div class="wrap"><div class="mono">// 04</div><h2 data-reveal>Skills</h2><div class="tw"><table><thead><tr><th>Skill / technology</th><th>Category</th><th>Self-assessed</th><th>Time</th></tr></thead><tbody id="skList"></tbody></table></div><p class="note">Proficiency is self-assessed and not a measured score. Values in brackets are placeholders to be filled in.</p></div></section>
+<section id="about"><div class="wrap"><div class="mono">// 01 — Identity record</div><h2 data-reveal>About</h2><div class="about"><p class="lead">I’m interested in what happens beneath the abstractions — how instructions execute, how operating systems manage processes and memory, and how software behaves when examined at a lower level. I use hands-on experiments and practical projects to deepen my understanding of systems and security.</p><div class="coord dossier" id="facts"></div></div></div></section>
+<section id="projects"><div class="wrap"><div class="mono">// 02 — Investigation archives</div><h2 data-reveal>Projects</h2><div class="proj" id="projList"></div></div></section>
+<section id="experience"><div class="wrap"><div class="mono">// 03 — Operational history</div><h2 data-reveal>Experience</h2><div class="tl" id="expList"></div></div></section>
+<section id="skills"><div class="wrap"><div class="mono">// 04 — Network infrastructure</div><h2 data-reveal>Skills</h2><div class="tw"><table><thead><tr><th>Skill / technology</th><th>Category</th><th>Self-assessed</th><th>Time</th></tr></thead><tbody id="skList"></tbody></table></div><p class="note">Proficiency is self-assessed and not a measured score. Values in brackets are placeholders to be filled in.</p></div></section>
 <section id="service"><div class="wrap"><div class="mono">// 05</div><h2 data-reveal>Finest Service</h2><div class="shell ph">[Section purpose and content to be defined]</div></div></section>
 <section id="education"><div class="wrap"><div class="mono">// 06</div><h2 data-reveal>Education</h2><div id="eduList"></div></div></section>
 <section id="courses"><div class="wrap"><div class="mono">// 07</div><h2 data-reveal>Courses</h2><div id="crsList"></div></div></section>
-<section id="contact"><div class="wrap contact"><div class="pwrap"><div class="ptr" role="img" aria-label="Portrait placeholder — halftone pattern"></div><small class="mono">[Portrait to be supplied]</small></div><div><div class="mono">// 08</div><h2 data-reveal>Contact</h2><p class="lead">Reach out for opportunities, collaboration, or questions.</p><ul class="clist" id="cList"></ul></div></div></section>
+<section id="contact"><div class="wrap contact"><div class="pwrap"><div class="ptr" role="img" aria-label="Portrait placeholder — halftone pattern"></div><small class="mono">[Portrait to be supplied]</small></div><div><div class="mono">// 08 — Open channel</div><h2 data-reveal>Contact</h2><p class="lead">Reach out for opportunities, collaboration, or questions.</p><ul class="clist" id="cList"></ul></div></div></section>
 </main>
 <footer><span class="mark">PaweesRaag</span><span class="mono">Under the Surface</span><a class="mono" href="#hero">Back to top ↑</a><span class="mono">© <span id="yr"></span> PaweesRaag</span></footer>
 <script>
@@ -667,6 +727,7 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
 })();
 </script>
 
+<script>
 /* Cinematic section navigation: warp covers the scroll midpoint, then clears completely. */
 (function(){
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -726,5 +787,33 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   });
 })();
 
+/* Neo-Tokyo layer: re-renders content sections from DATA (edit DATA above, not here). */
+(function(){
+document.documentElement.classList.add("js");
+const D=DATA,I=n=>String(n+1).padStart(2,"0");
+const edu=D.education[0]||{},cert=(D.facts.find(f=>f[0]=="Certification")||[])[1];
+const rec=[["Subject","PaweesRaag"],["Base",(D.facts.find(f=>f[0]=="Base")||[])[1]],["Education",edu.deg?`${edu.deg} — ${edu.inst} (${edu.dates})`:""],["Certification",cert],["Research interests","How instructions execute · operating systems, processes and memory · low-level software analysis"]].filter(r=>r[1]);
+$("#facts").innerHTML=rec.map((r,i)=>`<div style="--i:${i}"><span class="k">${r[0]}</span><span>${esc(r[1])}</span></div>`).join("");
+$("#projList").innerHTML=D.projects.map((p,i)=>`<article class="case" style="--i:${i}"><div><div class="id">CASE ${I(i)} · ${ph(p.cat)}</div><h3>${ph(p.name)}</h3><p>${ph(p.desc)}</p></div><dl><div><dt>Methodology</dt><dd>${ph(p.method||"[Methodology to be added]")}</dd></div><div><dt>Verified outcome</dt><dd>${ph(p.outcome||"[Verified outcome to be added]")}</dd></div><div><dt>Evidence</dt><dd>${ph(p.evidence||"[Screenshots or diagrams to be added]")}</dd></div></dl><div class="tags">${p.tech.map(t=>`<span>${esc(t)}</span>`).join("")}</div><div class="links">${p.github?`<a href="${p.github}">GitHub</a>`:`<span class="na">GitHub</span>`}${p.demo?`<a href="${p.demo}">Live demo</a>`:`<span class="na">Live demo</span>`}</div></article>`).join("");
+$("#expList").innerHTML=D.experience.map((e,i)=>`<article style="--i:${i}"><div class="opid">OP-${I(i)} · ${ph(e.dates)}</div><h3>${esc(e.role)}</h3><div class="mono" style="color:var(--mute)">${esc(e.org)}</div><p>${ph(e.desc)}</p></article>`).join("");
+/* capability map: domains from DATA.skills; edges show relationships between domains, not proficiency */
+const sw=$("#skills .wrap");sw.querySelector(".tw")?.remove();sw.querySelector(".note")?.remove();
+const n=D.skills.length,cx=400,cy=200,rx=300,ry=145;
+const pts=D.skills.map((_,i)=>{const a=-Math.PI/2+(Math.PI*2*i/Math.max(1,n));return [cx+Math.cos(a)*rx,cy+Math.sin(a)*ry]});
+let svg=`<svg viewBox="0 0 800 400" aria-hidden="true">`;
+pts.forEach((p,i)=>{const q=pts[(i+1)%n];if(n>2)svg+=`<line class="x" x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}"/>`;svg+=`<line class="e" x1="400" y1="200" x2="${p[0]}" y2="${p[1]}"/>`});
+svg+=`<circle class="hub" cx="400" cy="200" r="38"/><text x="400" y="204">CORE</text><text class="lb" x="400" y="256">Security research</text>`;
+pts.forEach((p,i)=>{svg+=`<circle class="n" cx="${p[0]}" cy="${p[1]}" r="22"/><text x="${p[0]}" y="${p[1]+4}">${I(i)}</text><text class="lb" x="${p[0]}" y="${p[1]+(p[1]<200?-32:42)}">${esc(D.skills[i][1])}</text>`});
+svg+=`</svg>`;
+sw.insertAdjacentHTML("beforeend",`<div class="capmap">${svg}<ul class="caps">${D.skills.map((r,i)=>`<li class="cap" style="--i:${i}"><b>${I(i)}</b><span>${esc(r[1])}</span><small>${ph(r[0])} · self-assessed: ${ph(r[2])} · time: ${ph(r[3])}</small></li>`).join("")}</ul></div><p class="note">Domains and links show how areas connect, not a measured score. Bracketed values are placeholders.</p>`);
+/* focus → one-time staggered entrance + brief heading glitch */
+const red=matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll("section").forEach(sec=>{
+ const go=()=>{if(sec.classList.contains("focus")){sec.classList.add("in");const h=sec.querySelector("h2");if(h&&!red&&!sec._g){sec._g=1;setTimeout(()=>{h.classList.add("gl");setTimeout(()=>h.classList.remove("gl"),260)},320)}}};
+ new MutationObserver(go).observe(sec,{attributes:true,attributeFilter:["class"]});go();
+});
+setTimeout(()=>document.querySelectorAll("section").forEach(s=>{const r=s.getBoundingClientRect();if(r.top<innerHeight)s.classList.add("in")}),600);
+})();
+</script>
 </body>
 </html>
