@@ -659,6 +659,7 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
 })();
 </script>
 
+<script>
 /* Cinematic section navigation: warp covers the scroll midpoint, then clears completely. */
 (function(){
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -717,6 +718,7 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     if(target)navigate(location.hash,false);
   });
 })();
+</script>
 
 </body>
 </html>
