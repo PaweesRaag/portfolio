@@ -145,6 +145,11 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #about h2{transform:none;opacity:1;filter:none;transition:none}
 }
 
+/* GT Planar-inspired kinetic plane transition — scoped only to Hero → About. */
+#hero .hero-txt{transform-origin:12% 70%;transform-style:preserve-3d;backface-visibility:hidden;will-change:transform,opacity,filter}
+#about h2{transform-origin:0% 100%;transform-style:preserve-3d;backface-visibility:hidden;will-change:transform,opacity,filter}
+@media(prefers-reduced-motion:reduce){#hero .hero-txt,#about h2{transform:none!important;filter:none!important;opacity:1!important;will-change:auto}}
+
 /* EXPERIMENT 05 — Data Stream: particles descend from the event horizon into the corridor. */
 #data-stream-canvas{
   position:fixed;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;
@@ -349,7 +354,9 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     document.documentElement.style.setProperty("--hero-exit",p.toFixed(4));
     if(bg){bg.style.opacity=String(1-p*.96);bg.style.scale=String(1+p*.13);bg.style.filter="brightness("+(0.9+p*.1)+") saturate(1) blur("+(p*5.5)+"px)"}
     if(shade)shade.style.opacity=String(1-p*.92);
-    if(title){title.style.transform="translate3d(0,"+(-p*105)+"px,0)";title.style.opacity=String(Math.max(0,1-p*1.12));title.style.filter="blur("+(p*5)+"px)"}
+    if(title){const tilt=p*42;title.style.transform="perspective(1100px) translate3d(0,"+(-p*115)+"px,0) rotateX("+(-tilt)+"deg) rotateY("+(p*9)+"deg) skewY("+(p*-3.5)+"deg) scale("+(1-p*.12)+")";title.style.opacity=String(Math.max(0,1-p*1.12));title.style.filter="blur("+(p*4.5)+"px)"}
+    const aboutTitle=document.querySelector("#about h2");
+    if(aboutTitle){const q=Math.max(0,Math.min(1,(p-.12)/.78));aboutTitle.style.transform="perspective(1000px) translate3d(0,"+((1-q)*52)+"px,0) rotateX("+((1-q)*-42)+"deg) rotateY("+((1-q)*12)+"deg) skewY("+((1-q)*-4)+"deg) scale("+(0.88+q*.12)+")";aboutTitle.style.opacity=String(.08+q*.92);aboutTitle.style.filter="blur("+((1-q)*6)+"px)"}
     if(cue){cue.style.transform="translate3d(0,"+(-p*35)+"px,0)";cue.style.opacity=String(Math.max(0,1-p*1.2))}
     if(scene){scene.style.filter="brightness("+(0.88+p*.25)+") saturate("+(0.92+p*.15)+")"}
     if(particles)particles.style.setProperty("--dissolve",String(p));
