@@ -139,10 +139,15 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   filter:blur(5px);
   transition:transform .9s cubic-bezier(.2,.75,.2,1),opacity .75s ease,filter .8s ease;
 }
-#about.focus h2{
+#about.focus h2,#about.in h2{
   transform:translate3d(0,0,0) scale(1);
   opacity:1;
   filter:blur(0);
+}
+/* Fail-safe: never leave the first content heading blurred if an observer misses it. */
+#about h2{animation:about-heading-failsafe 1.1s .35s both}
+@keyframes about-heading-failsafe{
+  to{transform:translate3d(0,0,0) scale(1);opacity:1;filter:blur(0)}
 }
 @media(prefers-reduced-motion:reduce){
   #bhv{opacity:1;scale:1;transition:none}
@@ -407,7 +412,6 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   const cue=hero&&hero.querySelector(".cue");
   const particles=document.querySelector("#hero");
   const scene=document.querySelector("#scene");
-  const aboutTitle=document.querySelector("#about h2");
   if(!hero || matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   let raf=0;
   function update(){
@@ -419,7 +423,6 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     if(title){title.style.transform="translate3d(0,"+(-p*105)+"px,0)";title.style.opacity=String(Math.max(0,1-p*1.12));title.style.filter="blur("+(p*5)+"px)"}
     if(cue){cue.style.transform="translate3d(0,"+(-p*35)+"px,0)";cue.style.opacity=String(Math.max(0,1-p*1.2))}
     if(scene){scene.style.filter="brightness("+(0.88+p*.25)+") saturate("+(0.92+p*.15)+")"}
-    if(aboutTitle){aboutTitle.style.transform="translate3d(0,"+((1-p)*38)+"px,0) scale("+(0.84+p*.16)+")";aboutTitle.style.opacity=String(.12+p*.88);aboutTitle.style.filter="blur("+((1-p)*5)+"px)"}
     if(particles)particles.style.setProperty("--dissolve",String(p));
   }
   addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(update)},{passive:true});
