@@ -393,7 +393,7 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
   canvas.setAttribute("aria-hidden","true");document.body.appendChild(canvas);
   const ctx=canvas.getContext("2d",{alpha:true});if(!ctx)return;
   let w=0,h=0,dpr=1,raf=0,start=0,triggered=false,previous=0;
-  const duration=1000,rays=[];
+  const duration=3000,rays=[];
   function resize(){
     dpr=Math.min(devicePixelRatio||1,1.6);w=innerWidth;h=innerHeight;
     canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
