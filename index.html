@@ -340,18 +340,20 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     document.documentElement.style.setProperty("--hero-exit",p.toFixed(4));
     /* Long, gentle fade during the final quarter of the hero's travel. */
     const fade=Math.max(0,Math.min(1,(p-.48)/.27));
-    /* Zoom the entire hero scene away from the viewer as scroll progresses. */
+    /* Push the hero forward into the hyperspace jump: expand, then dissolve. */
     if(bg){
       bg.style.opacity=String(1-fade);
-      bg.style.scale=String(1-p*.24);
-      bg.style.filter="brightness("+(1-fade*.45)+") saturate("+(1-fade*.35)+") blur("+(fade*2.5)+"px)";
+      bg.style.scale=String(1+p*1.15);
+      bg.style.translate="0 "+(-p*7)+"%";
+      bg.style.filter="brightness("+(1+fade*.12)+") saturate("+(1-fade*.18)+") blur("+(fade*2.5)+"px)";
     }
     if(shade){
       shade.style.opacity=String(1-fade*.9);
-      shade.style.transform="scale("+(1-p*.16)+")";
+      shade.style.scale=String(1+p*.72);
+      shade.style.translate="0 "+(-p*5)+"%";
     }
     if(title){
-      title.style.transform="translate3d(0,"+(-p*105)+"px,0) scale("+(1-p*.2)+")";
+      title.style.transform="translate3d(0,"+(-p*125)+"px,0) scale("+(1+p*.42)+")";
       title.style.opacity=String(Math.max(0,1-p*1.12));
       title.style.filter="blur("+(p*5)+"px)";
     }
