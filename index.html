@@ -141,6 +141,16 @@ animation:energy-pulse 5.5s ease-in-out infinite}
   #about h2{transform:none;opacity:1;filter:none;transition:none}
 }
 
+/* About materializes outward from the hyperspace vanishing point. */
+#about .wrap{transform-origin:50% 50%}
+#about.hyperspace-arriving .wrap{animation:about-materialize .72s cubic-bezier(.16,.82,.22,1) both}
+@keyframes about-materialize{
+  0%{clip-path:circle(0% at 50% 48%);transform:scale(.72);opacity:0;filter:blur(14px)}
+  58%{clip-path:circle(78% at 50% 48%);transform:scale(1.025);opacity:1;filter:blur(2px)}
+  100%{clip-path:circle(150% at 50% 48%);transform:scale(1);opacity:1;filter:blur(0)}
+}
+@media(prefers-reduced-motion:reduce){#about.hyperspace-arriving .wrap{animation:none;clip-path:none;transform:none;opacity:1;filter:none}}
+
 /* Hyperspace jump overlay — visible only while crossing Hero into About. */
 #hyperspace-jump{position:fixed;inset:0;width:100%;height:100%;z-index:9999;pointer-events:none;opacity:0;mix-blend-mode:normal;background:#061126}
 @media(prefers-reduced-motion:reduce){#hyperspace-jump{display:none}}
@@ -330,8 +340,11 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     document.documentElement.style.setProperty("--hero-exit",p.toFixed(4));
     /* Long, gentle fade during the final quarter of the hero's travel. */
     const fade=Math.max(0,Math.min(1,(p-.48)/.27));
-    if(bg){bg.style.opacity=String(1-fade);bg.style.scale=String(1+fade*.12);bg.style.filter="brightness("+(1-fade*.45)+") saturate("+(1-fade*.35)+") blur("+(fade*2.5)+"px)"}
-    if(shade)shade.style.opacity=String(1-fade*.9);
+    /* Hero expands toward the viewer before dissolving into the jump. */
+    if(bg){bg.style.opacity=String(1-fade);bg.style.scale=String(1+fade*.42);bg.style.filter="brightness("+(1-fade*.45)+") saturate("+(1-fade*.35)+") blur("+(fade*2.5)+"px)"}
+    if(shade){shade.style.opacity=String(1-fade*.9);shade.style.transform="scale("+(1+fade*.24)+")"}
+    if(title){title.style.transform="translate3d(0,"+(-p*105)+"px,0) scale("+(1+fade*.22)+")";title.style.opacity=String(Math.max(0,1-p*1.12));title.style.filter="blur("+(p*5)+"px)"}
+    if(p<.7){const about=document.querySelector("#about");if(about)about.classList.remove("hyperspace-arriving")}
     if(title){title.style.transform="translate3d(0,"+(-p*105)+"px,0)";title.style.opacity=String(Math.max(0,1-p*1.12));title.style.filter="blur("+(p*5)+"px)"}
     if(cue){cue.style.transform="translate3d(0,"+(-p*35)+"px,0)";cue.style.opacity=String(Math.max(0,1-p*1.2))}
     if(scene)scene.style.filter="brightness("+(0.88+p*.25)+") saturate("+(0.92+p*.15)+")";
@@ -418,6 +431,13 @@ let tick=0;addEventListener("scroll",()=>{if(tick)return;tick=requestAnimationFr
     previous=p;
     if(!triggered)return;
     const t=Math.max(0,Math.min(1,(now-start)/duration));
+    /* Reveal About from the centre near the end of the jump, not from the top edge. */
+    if(t>=.68&&!hero.__aboutArrived){
+      hero.__aboutArrived=true;
+      const about=document.querySelector("#about");
+      if(about)about.classList.add("hyperspace-arriving");
+    }
+    if(t<.12){const about=document.querySelector("#about");if(about)about.classList.remove("hyperspace-arriving");hero.__aboutArrived=false}
     /* Keep the viewport dark blue; no central glow or white flash. */
     const arrivalFade=Math.max(0,Math.min(1,(t-.88)/.12));
     canvas.style.opacity=String(1-arrivalFade);
